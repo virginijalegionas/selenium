@@ -1,0 +1,5 @@
+/obj
+/bin/Debug/net8.0
+/*.csproj
+/*.sln
+/GlobalUsings.cs
