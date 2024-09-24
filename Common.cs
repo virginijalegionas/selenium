@@ -46,6 +46,42 @@ public class Common
         BaseOperations.GetElement(xpath, 5).Click();
     }
 
+    public static void ClickOnRadio(string radioName)
+    {
+        string xpath = $"//label[text()='{radioName}']//parent::div/input";
+        BaseOperations.GetElement(xpath, 5).Click();
+
+    }
+    public static void CheckTreeNode(string treeNode)
+    {
+        string xpath = $"//span[text()='{treeNode}']//parent::label//span[@class='rct-checkbox']//*[local-name()='svg']";
+        if (!Validate.IsTreeNodeChecked(treeNode))
+            BaseOperations.GetElement(xpath, 5).Click();
+    }
+
+    public static void UnCheckTreeNode(string treeNode)
+    {
+        string xpath = $"//span[text()='{treeNode}']//parent::label//span[@class='rct-checkbox']//*[local-name()='svg']";
+        if (Validate.IsTreeNodeChecked(treeNode))
+            BaseOperations.GetElement(xpath, 5).Click();
+    }
+
+    public static void ExpandTreeNode(string treeNode)
+    {
+        string xpath = $"//span[text()='{treeNode}']//parent::label//parent::span//button//*[local-name()='svg']";
+        if (!Validate.IsTreeNodeExpanded(treeNode))
+            BaseOperations.GetElement(xpath, 5).Click();
+    }
+
+
+
+
+    public static void CollapseTreeNode(string treeNode)
+    {
+        string xpath = $"//span[text()='{treeNode}']//parent::label//parent::span//button//*[local-name()='svg']";
+        if (Validate.IsTreeNodeExpanded(treeNode))
+            BaseOperations.GetElement(xpath, 5).Click();
+    }
     public class Validate
     {
         public static bool IsLeftMenuExpanded(string menuName)
@@ -53,6 +89,38 @@ public class Common
             string xpath = $"//div[@class='header-text' and contains(text(),'{menuName}')]//ancestor::div[@class='element-group']/child::div";
             string className = BaseOperations.GetElement(xpath, 5).GetAttribute("class");
             if (className == "element-list collapse show")
+                return true;
+
+            else return false;
+
+        }
+
+        public static bool IsTreeNodeExpanded(string treeNode)
+        {
+            string xpath = $"//span[text()='{treeNode}']//parent::label//parent::span//button//*[local-name()='svg']";
+            string className = BaseOperations.GetElement(xpath, 5).GetAttribute("class");
+            if (className == "rct-icon rct-icon-expand-open")
+                return true;
+
+            else return false;
+
+        }
+        public static bool IsTreeNodeChecked(string treeNode)
+        {
+            string xpath = $"//span[text()='{treeNode}']//parent::label//span[@class='rct-checkbox']//*[local-name()='svg']";
+            string className = BaseOperations.GetElement(xpath, 5).GetAttribute("class");
+            if (className == "rct-icon rct-icon-check")
+                return true;
+
+            else return false;
+
+        }
+
+        public static bool IsRadioDisabled(string radioName)
+        {
+            string xpath = $"//label[text()='{radioName}']//parent::div/input"; ;
+            string attribute = BaseOperations.GetElement(xpath, 5).GetAttribute("disabled");
+            if (attribute == "true")
                 return true;
 
             else return false;
@@ -88,7 +156,7 @@ public class TextBox
         {
             Dictionary<string, string> outputValues = new Dictionary<string, string>();
             string xpath = "//div[@id='output']/div/p";
-            List<IWebElement> elements = BaseOperations.GetElements(xpath, 5);
+            List<IWebElement> elements = BaseOperations.GetElements(xpath);
             foreach (IWebElement element in elements)
             {
                 string elementText = element.Text;
@@ -122,26 +190,21 @@ public class BaseOperations : TestBase
     public static IWebElement GetElement(string xpath, int waitSeconds)
     {
         IWebElement element = null;
-        while (element == null && waitSeconds != 0)
+        for (; element == null && waitSeconds > 0; waitSeconds++)
         {
             element = driver.FindElement(By.XPath(xpath));
             ((IJavaScriptExecutor)driver)
         .ExecuteScript("arguments[0].scrollIntoView(true);", element);
-            Console.WriteLine(element.Text);
+            //Console.WriteLine(element.Text);
         }
         return element;
     }
 
-    public static List<IWebElement> GetElements(string xpath, int waitSeconds)
+    public static List<IWebElement> GetElements(string xpath)
     {
-        List<IWebElement> myElements = new List<IWebElement>();
-        //IWebElement element = null;
-        /*   while (myElements == null && waitSeconds != 0)
-          { */
-        myElements = driver.FindElements(By.XPath(xpath)).ToList();
+        List<IWebElement> myElements = driver.FindElements(By.XPath(xpath)).ToList();
         ((IJavaScriptExecutor)driver)
-    .ExecuteScript("arguments[0].scrollIntoView();", myElements[0]);
-        // }
+    .ExecuteScript("arguments[0].scrollIntoView();", myElements.Last());
         return myElements;
     }
 

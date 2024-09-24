@@ -11,8 +11,7 @@ namespace SeleniumTests
         [TestCleanup]
         public void Cleanup()
         {
-            if (driver != null)
-                driver.Quit();
+            driver?.Quit();
         }
 
         public void StartDriver()

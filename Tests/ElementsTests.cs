@@ -40,4 +40,33 @@ public class ElementsTests : TestBase
         Assert.AreEqual(myPermanentAddress, outputValues["Permananet Address"], $"Expected Permanant Address value to be: {myPermanentAddress}");
 
     }
+
+
+    [TestMethod]
+    public void CheckBox_CheckUncheckNodes()
+    {
+        Common.ClickBlockInMainMenu("Elements");
+        Common.ClickOnSubMenu("Check Box");
+
+        Common.ExpandTreeNode("Home");
+        Common.ExpandTreeNode("Desktop");
+        Common.CheckTreeNode("Notes");
+        Common.CheckTreeNode("Documents");
+
+
+
+
+    }
+    [TestMethod]
+    public void RadioButton()
+    {
+        Common.ClickBlockInMainMenu("Elements");
+        Common.ClickOnSubMenu("Radio Button");
+
+        Assert.IsFalse(Common.Validate.IsRadioDisabled("Yes"), $"Expected 'Yes' radio to be enabled ");
+        Assert.IsTrue(Common.Validate.IsRadioDisabled("No"), $"Expected 'No' radio to be disabled");
+
+
+
+    }
 }
