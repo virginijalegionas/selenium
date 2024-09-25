@@ -1,8 +1,5 @@
 namespace SeleniumTests;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using System;
-using System.Threading;
+
 
 
 [TestClass]
@@ -27,10 +24,10 @@ public class ElementsTests : TestBase
         string myEmail = $"email@mail.com";
         string myCurrentAddress = $"currAddr {Common.GenerateRandom()}";
         string myPermanentAddress = $"perAddr {Common.GenerateRandom()}";
-        TextBox.InputTextField("Full Name", myName);
-        TextBox.InputTextField("Email", myEmail);
-        TextBox.InputTextAreaField("Current Address", myCurrentAddress);
-        TextBox.InputTextAreaField("Permanent Address", myPermanentAddress);
+        TextBox.InputFullName(myName);
+        TextBox.InputEmail(myEmail);
+        TextBox.InputCurrentAddress(myCurrentAddress);
+        TextBox.InputPermanentAddress(myPermanentAddress);
         TextBox.ClickSubmit();
 
         Dictionary<string, string> outputValues = TextBox.Validate.GetOutputValues();
@@ -48,10 +45,10 @@ public class ElementsTests : TestBase
         Common.ClickBlockInMainMenu("Elements");
         Common.ClickOnSubMenu("Check Box");
 
-        Common.ExpandTreeNode("Home");
-        Common.ExpandTreeNode("Desktop");
-        Common.CheckTreeNode("Notes");
-        Common.CheckTreeNode("Documents");
+        CheckBox.ExpandTreeNode("Home");
+        CheckBox.ExpandTreeNode("Desktop");
+        CheckBox.CheckTreeNode("Notes");
+        CheckBox.CheckTreeNode("Documents");
 
 
 
@@ -63,8 +60,40 @@ public class ElementsTests : TestBase
         Common.ClickBlockInMainMenu("Elements");
         Common.ClickOnSubMenu("Radio Button");
 
-        Assert.IsFalse(Common.Validate.IsRadioDisabled("Yes"), $"Expected 'Yes' radio to be enabled ");
-        Assert.IsTrue(Common.Validate.IsRadioDisabled("No"), $"Expected 'No' radio to be disabled");
+        Assert.IsFalse(RadioButtons.Validate.IsRadioDisabled("Yes"), $"Expected 'Yes' radio to be enabled ");
+        Assert.IsTrue(RadioButtons.Validate.IsRadioDisabled("No"), $"Expected 'No' radio to be disabled");
+
+
+
+    }
+
+    [TestMethod]
+    public void Buttons_ClickAllButtons()
+    {
+        Common.ClickBlockInMainMenu("Elements");
+        Common.ClickOnSubMenu("Buttons");
+        Buttons.ClickDoubleClickMeButton();
+        Buttons.ClickRightClickMeButton();
+        Buttons.ClickClickMeButton();
+
+        string clickMessage = Buttons.Validate.GetClickMessage();
+        string doubleClickMessage = Buttons.Validate.GetDoubleClickMessage();
+        string rightClickMessage = Buttons.Validate.GetRightClickMessage();
+
+        Assert.AreEqual("You have done a dynamic click", clickMessage, $"Expected message is: You have done a dynamic click");
+        Assert.AreEqual("You have done a double click", doubleClickMessage, $"Expected message is: You have done a double click");
+        Assert.AreEqual("You have done a right click", rightClickMessage, $"Expected message is: You have done a right click");
+
+    }
+    [TestMethod]
+    public void xxxxx()
+    {
+        Common.ClickBlockInMainMenu("Elements");
+        Common.ClickOnSubMenu("Web Tables");
+
+
+        //WebTables.Validate.GetTableValues();
+
 
 
 
