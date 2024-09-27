@@ -3,46 +3,45 @@ using OpenQA.Selenium.Interactions;
 using SeleniumTests;
 
 
-public class Buttons : TestBase
+public class Buttons : BaseOperations
 {
-    public static void ClickClickMeButton()
+
+
+    public Buttons(IWebDriver driver) : base(driver)
     {
-        Common.ClickButton("Click Me");
     }
-    public static void ClickRightClickMeButton()
+
+    public void ClickClickMeButton()
     {
-        Actions act = new Actions(driver);
+        string xpath = "//button[text()='Click Me']";
+        ClickButton(By.XPath(xpath));
+    }
+    public void ClickRightClickMeButton()
+    {
         string xpath = $"//button[text()='Right Click Me']";
-        IWebElement element = BaseOperations.GetElement(By.XPath(xpath), 5);
-        act.ContextClick(element).Build().Perform();
+        RightClickButton(By.XPath(xpath));
     }
-    public static void ClickDoubleClickMeButton()
+    public void ClickDoubleClickMeButton()
     {
-        Actions act = new Actions(driver);
         string xpath = $"//button[text()='Double Click Me']";
-        IWebElement element = BaseOperations.GetElement(By.XPath(xpath), 5);
-        act.DoubleClick(element).Build().Perform();
+        DoubleClickButton(By.XPath(xpath));
     }
 
-    public class Validate
+    public string GetClickMessage()
     {
-        public static string GetClickMessage()
-        {
-            string xpath = $"//p[@id='dynamicClickMessage']";
-            return BaseOperations.GetElement(By.XPath(xpath), 5).Text;
-        }
+        string xpath = $"//p[@id='dynamicClickMessage']";
+        return GetElement(By.XPath(xpath), 5).Text;
+    }
 
-        public static string GetDoubleClickMessage()
-        {
-            string xpath = $"//p[@id='doubleClickMessage']";
-            return BaseOperations.GetElement(By.XPath(xpath), 5).Text;
-        }
-        public static string GetRightClickMessage()
-        {
-            string xpath = $"//p[@id='rightClickMessage']";
-            return BaseOperations.GetElement(By.XPath(xpath), 5).Text;
-        }
-
+    public string GetDoubleClickMessage()
+    {
+        string xpath = $"//p[@id='doubleClickMessage']";
+        return GetElement(By.XPath(xpath), 5).Text;
+    }
+    public string GetRightClickMessage()
+    {
+        string xpath = $"//p[@id='rightClickMessage']";
+        return GetElement(By.XPath(xpath), 5).Text;
     }
 
 }

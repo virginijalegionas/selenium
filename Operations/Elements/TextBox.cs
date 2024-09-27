@@ -1,43 +1,56 @@
 using OpenQA.Selenium;
 
 
-public class TextBox
+public class TextBox : BaseOperations
 {
-    public static void InputFullName(string fullNameValue)
+    public TextBox(IWebDriver driver) : base(driver)
     {
-        string xpath = $"//div/label[contains(text(),'Full Name')]//parent::div//following-sibling::div/input";
-        Common.InputTextField(xpath, fullNameValue);
     }
 
-    public static void InputEmail(string emailValue)
-    {
-        string xpath = $"//div/label[contains(text(),'Email')]//parent::div//following-sibling::div/input";
-        Common.InputTextField(xpath, emailValue);
+
+private static string MakeXpathForTextField(string fieldName, bool isTextArea){
+    if (!isTextArea){
+        return $"//div/label[contains(text(),'{fieldName}')]//parent::div//following-sibling::div/input";
+
     }
-    public static void InputCurrentAddress(string currentAddressValue)
+    else  return $"//div/label[contains(text(),'{fieldName}')]//parent::div//following-sibling::div/textarea";
+
+}
+    public void InputFullName(string fullNameValue)
     {
-        string xpath = $"//div/label[contains(text(),'Current Address')]//parent::div//following-sibling::div/input";
-        Common.InputTextAreaField(xpath, currentAddressValue);
+        string xpath = MakeXpathForTextField("Full Name", false);
+        InputTextField(By.XPath(xpath), fullNameValue);
     }
 
-    public static void InputPermanentAddress(string permanentAddressValue)
+    public void InputEmail(string emailValue)
     {
-        string xpath = $"//div/label[contains(text(),'Permanent Address')]//parent::div//following-sibling::div/input";
-        Common.InputTextAreaField(xpath, permanentAddressValue);
+        string xpath = MakeXpathForTextField("Email", false);
+        InputTextField(By.XPath(xpath), emailValue);
+    }
+    public void InputCurrentAddress(string currentAddressValue)
+    {
+        string xpath = MakeXpathForTextField("Current Address", true);
+        InputTextField(By.XPath(xpath), currentAddressValue);
     }
 
-    public static void ClickSubmit()
+    public void InputPermanentAddress(string permanentAddressValue)
     {
-        Common.ClickButton("Submit");
+        string xpath = MakeXpathForTextField("Permanent Address", true);
+        InputTextField(By.XPath(xpath), permanentAddressValue);
     }
 
-    public class Validate
+    public void ClickSubmit()
     {
-        public static Dictionary<string, string> GetOutputValues()
+        string xpath = "//button[text()='Submit']";
+        ClickButton(By.XPath(xpath));
+    }
+
+    
+        public Dictionary<string, string> GetOutputValues()
         {
             Dictionary<string, string> outputValues = new Dictionary<string, string>();
             string xpath = "//div[@id='output']/div/p";
-            List<IWebElement> elements = BaseOperations.GetElements(By.XPath(xpath), 5);
+            List<IWebElement> elements = GetElements(By.XPath(xpath), 5);
             foreach (IWebElement element in elements)
             {
                 string elementText = element.Text;
@@ -48,6 +61,6 @@ public class TextBox
             return outputValues;
         }
 
-    }
+   
 
 }

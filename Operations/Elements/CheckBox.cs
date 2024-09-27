@@ -1,60 +1,59 @@
 using OpenQA.Selenium;
 
-public class CheckBox
+public class CheckBox : BaseOperations
 {
-    public static void CheckTreeNode(string treeNode)
+    public CheckBox(IWebDriver driver) : base(driver)
+    {
+    }
+
+    public void CheckTreeNode(string treeNode)
     {
         string xpath = $"//span[text()='{treeNode}']//parent::label//span[@class='rct-checkbox']//*[local-name()='svg']";
-        if (!Validate.IsTreeNodeChecked(treeNode))
-            BaseOperations.GetElement(By.XPath(xpath), 5).Click();
+        if (!IsTreeNodeChecked(treeNode))
+            GetElement(By.XPath(xpath), 5).Click();
     }
 
-    public static void UnCheckTreeNode(string treeNode)
+    public void UnCheckTreeNode(string treeNode)
     {
         string xpath = $"//span[text()='{treeNode}']//parent::label//span[@class='rct-checkbox']//*[local-name()='svg']";
-        if (Validate.IsTreeNodeChecked(treeNode))
-            BaseOperations.GetElement(By.XPath(xpath), 5).Click();
+        if (IsTreeNodeChecked(treeNode))
+            GetElement(By.XPath(xpath), 5).Click();
     }
 
-    public static void ExpandTreeNode(string treeNode)
+    public void ExpandTreeNode(string treeNode)
     {
         string xpath = $"//span[text()='{treeNode}']//parent::label//parent::span//button//*[local-name()='svg']";
-        if (!Validate.IsTreeNodeExpanded(treeNode))
-            BaseOperations.GetElement(By.XPath(xpath), 5).Click();
+        if (!IsTreeNodeExpanded(treeNode))
+            GetElement(By.XPath(xpath), 5).Click();
     }
 
-
-
-
-    public static void CollapseTreeNode(string treeNode)
+    public void CollapseTreeNode(string treeNode)
     {
         string xpath = $"//span[text()='{treeNode}']//parent::label//parent::span//button//*[local-name()='svg']";
-        if (Validate.IsTreeNodeExpanded(treeNode))
-            BaseOperations.GetElement(By.XPath(xpath), 5).Click();
+        if (IsTreeNodeExpanded(treeNode))
+            GetElement(By.XPath(xpath), 5).Click();
     }
 
-    public class Validate
+    public bool IsTreeNodeExpanded(string treeNode)
     {
-        public static bool IsTreeNodeExpanded(string treeNode)
-        {
-            string xpath = $"//span[text()='{treeNode}']//parent::label//parent::span//button//*[local-name()='svg']";
-            string className = BaseOperations.GetElement(By.XPath(xpath), 5).GetAttribute("class");
-            if (className == "rct-icon rct-icon-expand-open")
-                return true;
+        string xpath = $"//span[text()='{treeNode}']//parent::label//parent::span//button//*[local-name()='svg']";
+        string className = GetElement(By.XPath(xpath), 5).GetAttribute("class");
+        if (className == "rct-icon rct-icon-expand-open")
+            return true;
 
-            else return false;
+        else return false;
 
-        }
-        public static bool IsTreeNodeChecked(string treeNode)
-        {
-            string xpath = $"//span[text()='{treeNode}']//parent::label//span[@class='rct-checkbox']//*[local-name()='svg']";
-            string className = BaseOperations.GetElement(By.XPath(xpath), 5).GetAttribute("class");
-            if (className == "rct-icon rct-icon-check")
-                return true;
-
-            else return false;
-
-        }
     }
+    public bool IsTreeNodeChecked(string treeNode)
+    {
+        string xpath = $"//span[text()='{treeNode}']//parent::label//span[@class='rct-checkbox']//*[local-name()='svg']";
+        string className = GetElement(By.XPath(xpath), 5).GetAttribute("class");
+        if (className == "rct-icon rct-icon-check")
+            return true;
+
+        else return false;
+
+    }
+
 
 }

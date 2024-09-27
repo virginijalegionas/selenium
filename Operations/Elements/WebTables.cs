@@ -3,108 +3,115 @@
 
 using OpenQA.Selenium;
 
-public class WebTables
+public class WebTables : BaseOperations
 {
-
-    public static void ClickAddButton()
+    public WebTables(IWebDriver driver) : base(driver)
     {
-        Common.ClickButton("Add");
     }
 
-    public static void ClickEditByNameButton(string name)
+    public void ClickAddButton()
+    {
+        string xpath = "//button[text()='Add']";
+        ClickButton(By.XPath(xpath));
+    }
+
+    public void ClickEditByNameButton(string name)
     {
         string xpath = $"//div//div[text()='{name}']//parent::div//span[@title='Edit']";
-        BaseOperations.GetElement(By.XPath(xpath), 5).Click();
-
+        ClickButton(By.XPath(xpath));
     }
 
 
-    public static void ClickDeleteByNameButton(string name)
+    public void ClickDeleteByNameButton(string name)
     {
         string xpath = $"//div//div[text()='{name}']//parent::div//span[@title='Delete']";
-        BaseOperations.GetElement(By.XPath(xpath), 5).Click();
+        ClickButton(By.XPath(xpath));
     }
 
-    public class Edit
+    //not WORKING, NEEN TO LOOK FOR SOLUTION: 
+    //element click intercepted: Element <span class="sr-only">...</span> is not clickable at point (1342, 44). 
+    //Other element would receive the click: <span aria-hidden="true">...</span>
+    public void ClickXButton()
     {
-
-        //not WORKING, NEEN TO LOOK FOR SOLUTION: 
-        //element click intercepted: Element <span class="sr-only">...</span> is not clickable at point (1342, 44). 
-        //Other element would receive the click: <span aria-hidden="true">...</span>
-        public static void ClickXButton()
-        {
-            string xpath = $"//button//span[text()='Close']";
-            BaseOperations.GetElement(By.XPath(xpath), 5).Click();
-        }
-        public static void ClickSubmitButton()
-        {
-            Common.ClickButton("Submit");
-        }
-        public static void InputEmail(string emailValue)
-        {
-            string xpath = $"//div/label[contains(text(),'Email')]//parent::div//following-sibling::div/input";
-            Common.InputTextField(xpath, emailValue);
-        }
-        public static void InputFirstName(string firstNameValue)
-        {
-            string xpath = $"//div/label[contains(text(),'First Name')]//parent::div//following-sibling::div/input";
-            Common.InputTextField(xpath, firstNameValue);
-        }
-        public static void InputLastName(string lastNameValue)
-        {
-            string xpath = $"//div/label[contains(text(),'First Name')]//parent::div//following-sibling::div/input";
-            Common.InputTextField(xpath, lastNameValue);
-        }
-        public static void InputAgeName(string ageValue)
-        {
-            string xpath = $"//div/label[contains(text(),'Age')]//parent::div//following-sibling::div/input";
-            Common.InputTextField(xpath, ageValue);
-        }
-        public static void InputSalaryName(string salaryValue)
-        {
-            string xpath = $"//div/label[contains(text(),'Salary')]//parent::div//following-sibling::div/input";
-            Common.InputTextField(xpath, salaryValue);
-        }
-        public static void InputDepartmentName(string departmentValue)
-        {
-            string xpath = $"//div/label[contains(text(),'Department')]//parent::div//following-sibling::div/input";
-            Common.InputTextField(xpath, departmentValue);
-        }
+        string xpath = $"//button//span[text()='Close']";
+        ClickButton(By.XPath(xpath));
     }
 
-    public class Add : Edit
+    public void ClickSubmitButton()
     {
+        string xpath = "//button[text()='Submit']";
+        ClickButton(By.XPath(xpath));
+    }
+
+    private static string MakeXpathForTextField(string fieldName)
+    {
+
+        return $"//div/label[contains(text(),'{fieldName}')]//parent::div//following-sibling::div/input";
 
     }
 
-    public class Validate
+
+    public void InputEmail(string emailValue)
     {
-        /* public static List<Dictionary<string, string>> GetTableValues()
+        string xpath = MakeXpathForTextField("Email");
+        InputTextField(By.XPath(xpath), emailValue);
+    }
+    public void InputFirstName(string firstNameValue)
+    {
+        string xpath = MakeXpathForTextField("First Name");
+        InputTextField(By.XPath(xpath), firstNameValue);
+
+    }
+    public void InputLastName(string lastNameValue)
+    {
+        string xpath = MakeXpathForTextField("Last Name");
+        InputTextField(By.XPath(xpath), lastNameValue);
+    }
+    public void InputAgeName(string ageValue)
+    {
+        string xpath = MakeXpathForTextField("Age");
+        InputTextField(By.XPath(xpath), ageValue);
+    }
+    public void InputSalaryName(string salaryValue)
+    {
+        string xpath = MakeXpathForTextField("Salary");
+        InputTextField(By.XPath(xpath), salaryValue);
+    }
+    public void InputDepartmentName(string departmentValue)
+    {
+        string xpath = MakeXpathForTextField("Department");
+        InputTextField(By.XPath(xpath), departmentValue);
+    }
+
+
+
+
+    /* public static List<Dictionary<string, string>> GetTableValues()
+    {
+        string columnNameXpath = $"//div[@class='rt-thead -header']//div[@class='rt-resizable-header-content']";
+        List<IWebElement> columnElements = BaseOperations.GetElements(By.XPath(columnNameXpath), 5);
+
+
+        string valueRowsXpath = $"//div[@class='rt-tr-group']/div[@role = 'row']";
+        List<IWebElement> rowElements = BaseOperations.GetElements(By.XPath(valueRowsXpath), 5);
+        List<Dictionary<string, string>> tableValues = [];
+        foreach (IWebElement row in rowElements)
         {
-            string columnNameXpath = $"//div[@class='rt-thead -header']//div[@class='rt-resizable-header-content']";
-            List<IWebElement> columnElements = BaseOperations.GetElements(By.XPath(columnNameXpath), 5);
-
-
-            string valueRowsXpath = $"//div[@class='rt-tr-group']/div[@role = 'row']";
-            List<IWebElement> rowElements = BaseOperations.GetElements(By.XPath(valueRowsXpath), 5);
-            List<Dictionary<string, string>> tableValues = [];
-            foreach (IWebElement row in rowElements)
+            List<IWebElement> rowValues = row.FindElements(By.TagName("div")).ToList();
+            Dictionary<string, string> allCellsInARow = [];
+            foreach (IWebElement cell in rowValues)
             {
-                List<IWebElement> rowValues = row.FindElements(By.TagName("div")).ToList();
-                Dictionary<string, string> allCellsInARow = [];
-                foreach (IWebElement cell in rowValues)
+                foreach (IWebElement columnElemnt in columnElements)
                 {
-                    foreach (IWebElement columnElemnt in columnElements)
-                    {
-                        allCellsInARow.Add(columnElemnt.Text, cell.Text);
-                    }
+                    allCellsInARow.Add(columnElemnt.Text, cell.Text);
                 }
-                tableValues.Add(allCellsInARow);
             }
+            tableValues.Add(allCellsInARow);
+        }
 
-            return tableValues;
-        } */
-    }
+        return tableValues;
+    } */
+
 
 
 }

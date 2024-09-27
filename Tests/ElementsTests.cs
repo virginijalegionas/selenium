@@ -5,6 +5,7 @@ namespace SeleniumTests;
 [TestClass]
 public class ElementsTests : TestBase
 {
+
     [TestInitialize]
 
     public void AutoStartDriver()
@@ -17,20 +18,21 @@ public class ElementsTests : TestBase
     [TestMethod]
     public void TextBox_FillAllValuesIn()
     {
-        Common.ClickBlockInMainMenu("Elements");
-        Assert.IsTrue(Common.Validate.IsLeftMenuExpanded("Elements"), $"Expexted that Elements Menu on the left is expanded");
-        Common.ClickOnSubMenu("Text Box");
+        TextBox textBox = new TextBox(driver);
+        textBox.MainPageMenu.ClickOnBlock("Elements");        
+        textBox.LeftPanel.ClickOnSubMenu("Text Box");
+
         string myName = $"name {Common.GenerateRandom()}";
         string myEmail = $"email@mail.com";
         string myCurrentAddress = $"currAddr {Common.GenerateRandom()}";
         string myPermanentAddress = $"perAddr {Common.GenerateRandom()}";
-        TextBox.InputFullName(myName);
-        TextBox.InputEmail(myEmail);
-        TextBox.InputCurrentAddress(myCurrentAddress);
-        TextBox.InputPermanentAddress(myPermanentAddress);
-        TextBox.ClickSubmit();
+        textBox.InputFullName(myName);
+        textBox.InputEmail(myEmail);
+        textBox.InputCurrentAddress(myCurrentAddress);
+        textBox.InputPermanentAddress(myPermanentAddress);
+        textBox.ClickSubmit();
 
-        Dictionary<string, string> outputValues = TextBox.Validate.GetOutputValues();
+        Dictionary<string, string> outputValues = textBox.GetOutputValues();
         Assert.AreEqual(myName, outputValues["Name"], $"Expected Name value to be: {myName}");
         Assert.AreEqual(myEmail, outputValues["Email"], $"Expected Email value to be: {myEmail}");
         Assert.AreEqual(myCurrentAddress, outputValues["Current Address"], $"Expected Current Address value to be: {myCurrentAddress}");
@@ -38,47 +40,50 @@ public class ElementsTests : TestBase
 
     }
 
-
+//TODO: test is not finished
     [TestMethod]
     public void CheckBox_CheckUncheckNodes()
     {
-        Common.ClickBlockInMainMenu("Elements");
-        Common.ClickOnSubMenu("Check Box");
+        CheckBox checkBox = new CheckBox(driver);
+        checkBox.MainPageMenu.ClickOnBlock("Elements");
+        checkBox.LeftPanel.ClickOnSubMenu("Check Box");
 
-        CheckBox.ExpandTreeNode("Home");
-        CheckBox.ExpandTreeNode("Desktop");
-        CheckBox.CheckTreeNode("Notes");
-        CheckBox.CheckTreeNode("Documents");
-
-
-
+        checkBox.ExpandTreeNode("Home");
+        checkBox.ExpandTreeNode("Desktop");
+        checkBox.CheckTreeNode("Notes");
+        checkBox.CheckTreeNode("Documents");
 
     }
     [TestMethod]
     public void RadioButton()
     {
-        Common.ClickBlockInMainMenu("Elements");
-        Common.ClickOnSubMenu("Radio Button");
+        RadioButton radioButton = new RadioButton(driver);
+        radioButton.MainPageMenu.ClickOnBlock("Elements");
+        radioButton.LeftPanel.ClickOnSubMenu("Radio Button");
 
-        Assert.IsFalse(RadioButtons.Validate.IsRadioDisabled("Yes"), $"Expected 'Yes' radio to be enabled ");
-        Assert.IsTrue(RadioButtons.Validate.IsRadioDisabled("No"), $"Expected 'No' radio to be disabled");
-
-
+        Assert.IsFalse(radioButton.IsRadioDisabled("Yes"), $"Expected 'Yes' radio to be enabled ");
+        Assert.IsTrue(radioButton.IsRadioDisabled("No"), $"Expected 'No' radio to be disabled");
+        radioButton.ClickOnImpressiveRadio();
+        Assert.AreEqual("Impressive", radioButton.GetWhichRadioSelected(), $"Expected, that Impressive radio is selected");
+        radioButton.ClickOnYesRadio();
+        Assert.AreEqual("Yes", radioButton.GetWhichRadioSelected(), $"Expected, that Yes radio is selected");
 
     }
 
     [TestMethod]
     public void Buttons_ClickAllButtons()
     {
-        Common.ClickBlockInMainMenu("Elements");
-        Common.ClickOnSubMenu("Buttons");
-        Buttons.ClickDoubleClickMeButton();
-        Buttons.ClickRightClickMeButton();
-        Buttons.ClickClickMeButton();
+        Buttons buttons = new Buttons(driver);
+        buttons.MainPageMenu.ClickOnBlock("Elements");
+        buttons.LeftPanel.ClickOnSubMenu("Buttons");
 
-        string clickMessage = Buttons.Validate.GetClickMessage();
-        string doubleClickMessage = Buttons.Validate.GetDoubleClickMessage();
-        string rightClickMessage = Buttons.Validate.GetRightClickMessage();
+        buttons.ClickDoubleClickMeButton();
+        buttons.ClickRightClickMeButton();
+        buttons.ClickClickMeButton();
+
+        string clickMessage = buttons.GetClickMessage();
+        string doubleClickMessage = buttons.GetDoubleClickMessage();
+        string rightClickMessage = buttons.GetRightClickMessage();
 
         Assert.AreEqual("You have done a dynamic click", clickMessage, $"Expected message is: You have done a dynamic click");
         Assert.AreEqual("You have done a double click", doubleClickMessage, $"Expected message is: You have done a double click");
@@ -88,11 +93,23 @@ public class ElementsTests : TestBase
     [TestMethod]
     public void xxxxx()
     {
-        Common.ClickBlockInMainMenu("Elements");
-        Common.ClickOnSubMenu("Web Tables");
+        WebTables webTables = new WebTables(driver);
+        webTables.MainPageMenu.ClickOnBlock("Elements");
+        webTables.LeftPanel.ClickOnSubMenu("Web Tables");
 
 
-        //WebTables.Validate.GetTableValues();
+        //webTables.GetTableValues();
+
+
+
+
+    }
+
+//todo navigation menu testing
+     [TestMethod]
+    public void NavigationMenuTesting()
+    {
+        //webTables.GetTableValues();
 
 
 

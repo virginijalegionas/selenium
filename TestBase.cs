@@ -5,7 +5,7 @@ namespace SeleniumTests
 {
     public class TestBase
     {
-        public static IWebDriver driver;
+        public IWebDriver driver;
         private string pageUrl = "https://demoqa.com/";
 
         [TestCleanup]
