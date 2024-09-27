@@ -14,17 +14,17 @@ public class Buttons : BaseOperations
     public void ClickClickMeButton()
     {
         string xpath = "//button[text()='Click Me']";
-        ClickButton(xpath);
+        ClickButton(By.XPath(xpath));
     }
     public void ClickRightClickMeButton()
     {
         string xpath = $"//button[text()='Right Click Me']";
-        RightClickButton(xpath);
+        RightClickButton(By.XPath(xpath));
     }
     public void ClickDoubleClickMeButton()
     {
         string xpath = $"//button[text()='Double Click Me']";
-        DoubleClickButton(xpath);
+        DoubleClickButton(By.XPath(xpath));
     }
 
     public string GetClickMessage()

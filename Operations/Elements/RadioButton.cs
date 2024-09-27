@@ -7,14 +7,12 @@ public class RadioButton : BaseOperations
 
     public void ClickOnYesRadio()
     {
-        string xpath = $"//input[@id='yesRadio']";
-        ClickOnRadio(xpath);
+        ClickOnRadio(By.Id("yesRadio"));
 
     }
     public void ClickOnImpressiveRadio()
     {
-        string xpath = $"//input[@id='impressiveRadio']";
-        ClickOnRadio(xpath);
+        ClickOnRadio(By.Id("impressiveRadio"));
 
     }
     public string GetWhichRadioSelected()

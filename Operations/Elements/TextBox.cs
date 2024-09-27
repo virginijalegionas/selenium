@@ -19,30 +19,30 @@ public static string MakeXpathForTextField(string fieldName, bool isTextArea){
     public void InputFullName(string fullNameValue)
     {
         string xpath = MakeXpathForTextField("Full Name", false);
-        InputTextField(xpath, fullNameValue);
+        InputTextField(By.XPath(xpath), fullNameValue);
     }
 
     public void InputEmail(string emailValue)
     {
         string xpath = MakeXpathForTextField("Email", false);
-        InputTextField(xpath, emailValue);
+        InputTextField(By.XPath(xpath), emailValue);
     }
     public void InputCurrentAddress(string currentAddressValue)
     {
         string xpath = MakeXpathForTextField("Current Address", true);
-        InputTextField(xpath, currentAddressValue);
+        InputTextField(By.XPath(xpath), currentAddressValue);
     }
 
     public void InputPermanentAddress(string permanentAddressValue)
     {
         string xpath = MakeXpathForTextField("Permanent Address", true);
-        InputTextField(xpath, permanentAddressValue);
+        InputTextField(By.XPath(xpath), permanentAddressValue);
     }
 
     public void ClickSubmit()
     {
         string xpath = "//button[text()='Submit']";
-        ClickButton(xpath);
+        ClickButton(By.XPath(xpath));
     }
 
     

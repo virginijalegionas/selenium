@@ -1,6 +1,5 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
-using SeleniumTests;
 
 
 
@@ -23,42 +22,38 @@ public class BaseOperations
         GetElement(By.XPath(xpath), 5).Click();
     }
 
-    public void InputTextField(string xpath, string inputText)
+    public void InputTextField(By by, string inputText)
     {
-        //string xpath = $"//div/label[contains(text(),'{labelName}')]//parent::div//following-sibling::div/input";
-        IWebElement element = GetElement(By.XPath(xpath), 5);
+        IWebElement element = GetElement(by, 5);
         element.Clear();
         element.SendKeys(inputText);
     }
-    public void ClickButton(string xpath)
+    public void ClickButton(By by)
     {
-        GetElement(By.XPath(xpath), 5).Click();
+        GetElement(by, 5).Click();
     }
-    public void ClickOnRadio(string xpath)
+    public void ClickOnRadio(By by)
     {
-        //string xpath = $"//label[text()='{radioName}']//parent::div/input";
-        GetElement(By.XPath(xpath), 5).Click();
+        GetElement(by, 5).Click();
 
     }
-    public void RightClickButton(string xpath)
+    public void RightClickButton(By by)
     {
         Actions act = new Actions(driver);
-        //string xpath = $"//button[text()='Right Click Me']";
-        IWebElement element = GetElement(By.XPath(xpath), 5);
+        IWebElement element = GetElement(by, 5);
         act.ContextClick(element).Build().Perform();
     }
-    public void DoubleClickButton(string xpath)
+    public void DoubleClickButton(By by)
     {
         Actions act = new Actions(driver);
-        //string xpath = $"//button[text()='Double Click Me']";
-        IWebElement element = GetElement(By.XPath(xpath), 5);
+        IWebElement element = GetElement(by, 5);
         act.DoubleClick(element).Build().Perform();
     }
 
     public IWebElement GetElement(By by, int waitSeconds)
     {
         IWebElement element = null;
-        if (IsElementExists(by, 5))
+        if (IsElementExists(by, waitSeconds))
         {
             element = driver.FindElement(by);
             ((IJavaScriptExecutor)driver)

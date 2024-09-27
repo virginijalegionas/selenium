@@ -12,20 +12,20 @@ public class WebTables : BaseOperations
     public void ClickAddButton()
     {
         string xpath = "//button[text()='Add']";
-        ClickButton(xpath);
+        ClickButton(By.XPath(xpath));
     }
 
     public void ClickEditByNameButton(string name)
     {
         string xpath = $"//div//div[text()='{name}']//parent::div//span[@title='Edit']";
-        ClickButton(xpath);
+        ClickButton(By.XPath(xpath));
     }
 
 
     public void ClickDeleteByNameButton(string name)
     {
         string xpath = $"//div//div[text()='{name}']//parent::div//span[@title='Delete']";
-        ClickButton(xpath);
+        ClickButton(By.XPath(xpath));
     }
 
     //not WORKING, NEEN TO LOOK FOR SOLUTION: 
@@ -34,13 +34,13 @@ public class WebTables : BaseOperations
     public void ClickXButton()
     {
         string xpath = $"//button//span[text()='Close']";
-        ClickButton(xpath);
+        ClickButton(By.XPath(xpath));
     }
 
     public void ClickSubmitButton()
     {
         string xpath = "//button[text()='Submit']";
-        ClickButton(xpath);
+        ClickButton(By.XPath(xpath));
     }
 
     public static string MakeXpathForTextField(string fieldName)
@@ -54,33 +54,33 @@ public class WebTables : BaseOperations
     public void InputEmail(string emailValue)
     {
         string xpath = MakeXpathForTextField("Email");
-        InputTextField(xpath, emailValue);
+        InputTextField(By.XPath(xpath), emailValue);
     }
     public void InputFirstName(string firstNameValue)
     {
         string xpath = MakeXpathForTextField("First Name");
-        InputTextField(xpath, firstNameValue);
+        InputTextField(By.XPath(xpath), firstNameValue);
 
     }
     public void InputLastName(string lastNameValue)
     {
         string xpath = MakeXpathForTextField("Last Name");
-        InputTextField(xpath, lastNameValue);
+        InputTextField(By.XPath(xpath), lastNameValue);
     }
     public void InputAgeName(string ageValue)
     {
         string xpath = MakeXpathForTextField("Age");
-        InputTextField(xpath, ageValue);
+        InputTextField(By.XPath(xpath), ageValue);
     }
     public void InputSalaryName(string salaryValue)
     {
         string xpath = MakeXpathForTextField("Salary");
-        InputTextField(xpath, salaryValue);
+        InputTextField(By.XPath(xpath), salaryValue);
     }
     public void InputDepartmentName(string departmentValue)
     {
         string xpath = MakeXpathForTextField("Department");
-        InputTextField(xpath, departmentValue);
+        InputTextField(By.XPath(xpath), departmentValue);
     }
 
 
