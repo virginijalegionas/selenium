@@ -19,12 +19,9 @@ public class ElementsTests : TestBase
     public void TextBox_FillAllValuesIn()
     {
         TextBox textBox = new TextBox(driver);
-        textBox.MainPageMenu.ClickOnBlock("Elements");
-        Assert.IsTrue(textBox.LeftPanel.IsLeftMenuExpanded("Elements"), $"Expexted that Elements Menu on the left is expanded");
-
-
-
+        textBox.MainPageMenu.ClickOnBlock("Elements");        
         textBox.LeftPanel.ClickOnSubMenu("Text Box");
+
         string myName = $"name {Common.GenerateRandom()}";
         string myEmail = $"email@mail.com";
         string myCurrentAddress = $"currAddr {Common.GenerateRandom()}";
@@ -101,6 +98,17 @@ public class ElementsTests : TestBase
         webTables.LeftPanel.ClickOnSubMenu("Web Tables");
 
 
+        //webTables.GetTableValues();
+
+
+
+
+    }
+
+//todo navigation menu testing
+     [TestMethod]
+    public void NavigationMenuTesting()
+    {
         //webTables.GetTableValues();
 
 

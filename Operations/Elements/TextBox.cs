@@ -8,7 +8,7 @@ public class TextBox : BaseOperations
     }
 
 
-public static string MakeXpathForTextField(string fieldName, bool isTextArea){
+private static string MakeXpathForTextField(string fieldName, bool isTextArea){
     if (!isTextArea){
         return $"//div/label[contains(text(),'{fieldName}')]//parent::div//following-sibling::div/input";
 

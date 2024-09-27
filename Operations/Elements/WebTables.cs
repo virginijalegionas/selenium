@@ -43,7 +43,7 @@ public class WebTables : BaseOperations
         ClickButton(By.XPath(xpath));
     }
 
-    public static string MakeXpathForTextField(string fieldName)
+    private static string MakeXpathForTextField(string fieldName)
     {
 
         return $"//div/label[contains(text(),'{fieldName}')]//parent::div//following-sibling::div/input";
