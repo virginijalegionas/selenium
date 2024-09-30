@@ -19,7 +19,7 @@ public class ElementsTests : TestBase
     public void TextBox_FillAllValuesIn()
     {
         TextBox textBox = new TextBox(driver);
-        textBox.MainPageMenu.ClickOnBlock("Elements");        
+        textBox.MainPageMenu.ClickOnBlock("Elements");
         textBox.LeftPanel.ClickOnSubMenu("Text Box");
 
         string myName = $"name {Common.GenerateRandom()}";
@@ -40,7 +40,7 @@ public class ElementsTests : TestBase
 
     }
 
-//TODO: test is not finished
+    //TODO: test is not finished
     [TestMethod]
     public void CheckBox_CheckUncheckNodes()
     {
@@ -54,6 +54,8 @@ public class ElementsTests : TestBase
         checkBox.CheckTreeNode("Documents");
 
     }
+
+    //TODO overlaping elements look into it
     [TestMethod]
     public void RadioButton()
     {
@@ -90,8 +92,10 @@ public class ElementsTests : TestBase
         Assert.AreEqual("You have done a right click", rightClickMessage, $"Expected message is: You have done a right click");
 
     }
+
+    //TODO Tests
     [TestMethod]
-    public void xxxxx()
+    public void WebTables()
     {
         WebTables webTables = new WebTables(driver);
         webTables.MainPageMenu.ClickOnBlock("Elements");
@@ -104,9 +108,51 @@ public class ElementsTests : TestBase
 
 
     }
+    [TestMethod]
+    public void DynamicProperties()
+    {
 
-//todo navigation menu testing
-     [TestMethod]
+        DynamicProperties dProperties = new DynamicProperties(driver);
+        dProperties.MainPageMenu.ClickOnBlock("Elements");
+        dProperties.LeftPanel.ClickOnSubMenu("Dynamic Properties");
+
+        bool isDisabled = dProperties.IsButtonDisabled("Will enable 5 seconds");
+        string classAttribute = dProperties.GetColorChangeButtonClass();
+        bool isVisible = dProperties.IsButtonVisible("Visible After 5 Seconds");
+
+        Assert.IsFalse(isVisible, $"Button: Visible After 5 Seconds - expected to be invisible");
+        Assert.IsTrue(isDisabled, $"Button: Will enable 5 seconds - expected to be disabled");
+        Assert.AreEqual("mt-4 btn btn-primary", classAttribute, $"Button: Color Change - expected to have class: mt-4 btn btn-primary");
+
+        Common.Wait(3);
+        Assert.IsTrue(dProperties.IsButtonVisible("Visible After 5 Seconds"), $"Button: Visible After 5 Seconds - expected to be visible");
+        Assert.IsFalse(dProperties.IsButtonDisabled("Will enable 5 seconds"), $"Button: Will enable 5 seconds - expected to be enabled");
+        Assert.AreEqual("mt-4 text-danger btn btn-primary", dProperties.GetColorChangeButtonClass(), $"Button: Color Change - expected to have class: mt-4 text-danger btn btn-primary");
+
+
+    }
+    [TestMethod]
+    public void UploadDownload()
+    {
+
+        UploadDownload uploadDownload = new UploadDownload(driver);
+        uploadDownload.MainPageMenu.ClickOnBlock("Elements");
+        uploadDownload.LeftPanel.ClickOnSubMenu("Upload and Download");
+
+        uploadDownload.UploadTestFile();
+        string uploadedFilePath = uploadDownload.GetUploadedFilePath();
+        Assert.AreEqual("C:\\fakepath\\TestUpload.txt", uploadedFilePath, $"Expected path - C:\\fakepath\\TestUpload.txt");
+
+        string sampleFile = "sampleFile.jpeg";
+        string samplePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads", sampleFile);
+        Common.DeleteFile(samplePath);
+        uploadDownload.ClickDownloadButton();
+                
+        Assert.IsTrue(Common.IsFileInFolder(samplePath, 3), $"File: {sampleFile}, expected to exist");
+        Common.DeleteFile(samplePath);
+    }
+    //todo navigation menu testing
+    [TestMethod]
     public void NavigationMenuTesting()
     {
         //webTables.GetTableValues();
