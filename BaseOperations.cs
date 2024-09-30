@@ -92,14 +92,10 @@ public class BaseOperations
 
         return false;
     }
-public bool IsElementDisabled(By by)
-    {        
+    public bool IsElementDisabled(By by)
+    {
         string attribute = GetElement(by, 5).GetAttribute("disabled");
-        if (attribute == "true")
-            return true;
-
-        else return false;
-
+        return attribute == "true";
     }
 
 }
