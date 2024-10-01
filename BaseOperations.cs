@@ -1,5 +1,7 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
+using OpenQA.Selenium.Support.UI;
+
 
 
 
@@ -34,8 +36,41 @@ public class BaseOperations
     }
     public void ClickOnRadio(By by)
     {
-        GetElement(by, 5).Click();
+        Actions act = new Actions(driver);
+        IWebElement element = GetElement(by, 5);
+        act.MoveToElement(element).Click().Build().Perform();
+    }
+    public void ClickOnCheckBox(By by)
+    {
+        Actions act = new Actions(driver);
+        IWebElement element = GetElement(by, 5);
+        act.MoveToElement(element).Click().Build().Perform();
+    }
 
+    //Format 2004 September 3
+    public void SelectDateFromPicker(string year, string month, string day)
+    {
+        GetElement(By.Id("dateOfBirthInput"), 5).Click();
+        SelectElement yearDropDown = new SelectElement(driver.FindElement(By.ClassName("react-datepicker__year-select")));
+        yearDropDown.SelectByValue(year);
+        SelectElement monthDropDown = new SelectElement(driver.FindElement(By.ClassName("react-datepicker__month-select")));
+        //Month Value and text are different need to get Value from the Text
+        string monthXpath = $"//option[contains(text(),'{month}')]";
+        string monthValue = GetElement(By.XPath(monthXpath), 5).GetAttribute("value");
+        monthDropDown.SelectByValue(monthValue);
+
+        string dayXpath = $"//div[@class='react-datepicker__week']//div[text()='{day}' and contains(@aria-label,'{month}')]";
+        GetElement(By.XPath(dayXpath), 5).Click();
+    }
+
+    public void UploadTestFile(By by, string fileName)
+    {
+        string fullPath = System.Reflection.Assembly.GetAssembly(typeof(UploadDownload)).Location;
+        string theDirectory = Path.GetDirectoryName(fullPath);
+
+        string uploadFile = Path.Combine(theDirectory, $"{fileName}");
+        IWebElement fileInput = driver.FindElement(by);
+        fileInput.SendKeys(uploadFile);
     }
     public void RightClickButton(By by)
     {

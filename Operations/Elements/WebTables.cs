@@ -2,6 +2,7 @@
 
 
 using OpenQA.Selenium;
+using OpenQA.Selenium.DevTools.V119.CacheStorage;
 
 public class WebTables : BaseOperations
 {
@@ -67,17 +68,17 @@ public class WebTables : BaseOperations
         string xpath = MakeXpathForTextField("Last Name");
         InputTextField(By.XPath(xpath), lastNameValue);
     }
-    public void InputAgeName(string ageValue)
+    public void InputAge(string ageValue)
     {
         string xpath = MakeXpathForTextField("Age");
         InputTextField(By.XPath(xpath), ageValue);
     }
-    public void InputSalaryName(string salaryValue)
+    public void InputSalary(string salaryValue)
     {
         string xpath = MakeXpathForTextField("Salary");
         InputTextField(By.XPath(xpath), salaryValue);
     }
-    public void InputDepartmentName(string departmentValue)
+    public void InputDepartment(string departmentValue)
     {
         string xpath = MakeXpathForTextField("Department");
         InputTextField(By.XPath(xpath), departmentValue);
@@ -86,31 +87,32 @@ public class WebTables : BaseOperations
 
 
 
-    /* public static List<Dictionary<string, string>> GetTableValues()
+    public List<Dictionary<string, string>> GetTableValues()
     {
-        string columnNameXpath = $"//div[@class='rt-thead -header']//div[@class='rt-resizable-header-content']";
-        List<IWebElement> columnElements = BaseOperations.GetElements(By.XPath(columnNameXpath), 5);
+        string headerNameXpath = $"//div[@class='rt-thead -header']//div[@class='rt-resizable-header-content']";
+        List<IWebElement> headerElements = GetElements(By.XPath(headerNameXpath), 5);
 
 
-        string valueRowsXpath = $"//div[@class='rt-tr-group']/div[@role = 'row']";
-        List<IWebElement> rowElements = BaseOperations.GetElements(By.XPath(valueRowsXpath), 5);
+        string rowsXpath = $"//div[@class='rt-tr-group']/div[@role = 'row']";
+        List<IWebElement> rowElements = GetElements(By.XPath(rowsXpath), 5);
         List<Dictionary<string, string>> tableValues = [];
         foreach (IWebElement row in rowElements)
         {
             List<IWebElement> rowValues = row.FindElements(By.TagName("div")).ToList();
-            Dictionary<string, string> allCellsInARow = [];
-            foreach (IWebElement cell in rowValues)
+            Dictionary<string, string> rowData = [];
+            if (rowValues[0].Text[0] != 160)
             {
-                foreach (IWebElement columnElemnt in columnElements)
+                for (int b = 0; b < headerElements.Count; b++)
                 {
-                    allCellsInARow.Add(columnElemnt.Text, cell.Text);
+                    rowData[headerElements[b].Text] = rowValues[b].Text;
                 }
+
             }
-            tableValues.Add(allCellsInARow);
+            tableValues.Add(rowData);
         }
 
         return tableValues;
-    } */
+    }
 
 
 

@@ -55,7 +55,6 @@ public class ElementsTests : TestBase
 
     }
 
-    //TODO overlaping elements look into it
     [TestMethod]
     public void RadioButton()
     {
@@ -92,8 +91,7 @@ public class ElementsTests : TestBase
         Assert.AreEqual("You have done a right click", rightClickMessage, $"Expected message is: You have done a right click");
 
     }
-
-    //TODO Tests
+    
     [TestMethod]
     public void WebTables()
     {
@@ -101,10 +99,64 @@ public class ElementsTests : TestBase
         webTables.MainPageMenu.ClickOnBlock("Elements");
         webTables.LeftPanel.ClickOnSubMenu("Web Tables");
 
+        List<Dictionary<string, string>> webTableValues = webTables.GetTableValues();
+        //Record for delete
+        Assert.IsNotNull(webTableValues.SingleOrDefault(x => x["First Name"] == "Cierra"
+                                        && x["Last Name"] == "Vega"
+                                        && x["Email"] == "cierra@example.com"), $"Expected that Record: Cierra Verga cierra@example.com is in the Table");
+        //Record for update
+        Assert.IsNotNull(webTableValues.SingleOrDefault(x => x["First Name"] == "Alden"
+                                        && x["Last Name"] == "Cantrell"
+                                        && x["Age"] == "45"
+                                        && x["Email"] == "alden@example.com"
+                                        && x["Salary"] == "12000"
+                                        && x["Department"] == "Compliance"), $"Expected that Record: Alden Cantrell alden@example.com is in the Table");
 
-        //webTables.GetTableValues();
+        //Delete Cierra record
+        webTables.ClickDeleteByNameButton("Cierra");
+        //Update Alden Record
+        webTables.ClickEditByNameButton("Alden");
+        webTables.InputFirstName("Alden_upd");
+        webTables.InputLastName("Cantrell_upd");
+        webTables.InputAge("55");
+        webTables.InputEmail("alden_upd@example.com");
+        webTables.InputSalary("13000");
+        webTables.InputDepartment("Compliance_upd");
+        webTables.ClickSubmitButton();
 
+        //Add John record
+        webTables.ClickAddButton();
+        webTables.InputFirstName("John");
+        webTables.InputLastName("Smith");
+        webTables.InputAge("99");
+        webTables.InputEmail("john_smith@example.com");
+        webTables.InputSalary("55200");
+        webTables.InputDepartment("CEO");
+        webTables.ClickSubmitButton();
 
+        //Validate values
+        webTableValues = webTables.GetTableValues();
+        Assert.IsNull(webTableValues.SingleOrDefault(x => x["First Name"] == "Cierra"
+                                        && x["Last Name"] == "Vega"
+                                        && x["Email"] == "cierra@example.com"), $"Expected that Record: Cierra Verga cierra@example.com is NOT in the Table");
+        Assert.IsNull(webTableValues.SingleOrDefault(x => x["First Name"] == "Alden"
+                                        && x["Last Name"] == "Cantrell"
+                                        && x["Age"] == "45"
+                                        && x["Email"] == "alden@example.com"
+                                        && x["Salary"] == "12000"
+                                        && x["Department"] == "Compliance"), $"Expected that Record: Alden Cantrell alden@example.com is NOT in the Table");
+        Assert.IsNotNull(webTableValues.SingleOrDefault(x => x["First Name"] == "Alden_upd"
+                                        && x["Last Name"] == "Cantrell_upd"
+                                        && x["Age"] == "55"
+                                        && x["Email"] == "alden_upd@example.com"
+                                        && x["Salary"] == "13000"
+                                        && x["Department"] == "Compliance_upd"), $"Expected that Record: Alden_upd Cantrell_upd alden_upd@example.com is in the Table");
+        Assert.IsNotNull(webTableValues.SingleOrDefault(x => x["First Name"] == "John"
+                                        && x["Last Name"] == "Smith"
+                                        && x["Age"] == "99"
+                                        && x["Email"] == "john_smith@example.com"
+                                        && x["Salary"] == "55200"
+                                        && x["Department"] == "CEO"), $"Expected that Record: John Smith john_smith@example.com is in the Table");
 
 
     }
@@ -139,7 +191,7 @@ public class ElementsTests : TestBase
         uploadDownload.MainPageMenu.ClickOnBlock("Elements");
         uploadDownload.LeftPanel.ClickOnSubMenu("Upload and Download");
 
-        uploadDownload.UploadTestFile();
+        uploadDownload.UploadFile("TestUpload.txt");
         string uploadedFilePath = uploadDownload.GetUploadedFilePath();
         Assert.AreEqual("C:\\fakepath\\TestUpload.txt", uploadedFilePath, $"Expected path - C:\\fakepath\\TestUpload.txt");
 
@@ -147,7 +199,7 @@ public class ElementsTests : TestBase
         string samplePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads", sampleFile);
         Common.DeleteFile(samplePath);
         uploadDownload.ClickDownloadButton();
-                
+
         Assert.IsTrue(Common.IsFileInFolder(samplePath, 3), $"File: {sampleFile}, expected to exist");
         Common.DeleteFile(samplePath);
     }
