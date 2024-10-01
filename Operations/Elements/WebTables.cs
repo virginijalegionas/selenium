@@ -1,8 +1,4 @@
-//using OpenQA.Selenium;
-
-
 using OpenQA.Selenium;
-using OpenQA.Selenium.DevTools.V119.CacheStorage;
 
 public class WebTables : BaseOperations
 {
@@ -43,14 +39,10 @@ public class WebTables : BaseOperations
         string xpath = "//button[text()='Submit']";
         ClickButton(By.XPath(xpath));
     }
-
     private static string MakeXpathForTextField(string fieldName)
     {
-
         return $"//div/label[contains(text(),'{fieldName}')]//parent::div//following-sibling::div/input";
-
     }
-
 
     public void InputEmail(string emailValue)
     {
@@ -84,9 +76,6 @@ public class WebTables : BaseOperations
         InputTextField(By.XPath(xpath), departmentValue);
     }
 
-
-
-
     public List<Dictionary<string, string>> GetTableValues()
     {
         string headerNameXpath = $"//div[@class='rt-thead -header']//div[@class='rt-resizable-header-content']";
@@ -100,17 +89,18 @@ public class WebTables : BaseOperations
         {
             List<IWebElement> rowValues = row.FindElements(By.TagName("div")).ToList();
             Dictionary<string, string> rowData = [];
-            if (rowValues[0].Text[0] != 160)
+            if (rowValues[0].Text[0] != 32)
             {
                 for (int b = 0; b < headerElements.Count; b++)
                 {
                     rowData[headerElements[b].Text] = rowValues[b].Text;
                 }
-
             }
-            tableValues.Add(rowData);
+            if (rowData.Count > 0)
+            {
+                tableValues.Add(rowData);
+            }
         }
-
         return tableValues;
     }
 
