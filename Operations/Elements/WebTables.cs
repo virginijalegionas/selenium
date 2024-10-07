@@ -1,4 +1,5 @@
 using OpenQA.Selenium;
+using OpenQA.Selenium.Interactions;
 
 public class WebTables : BaseOperations
 {
@@ -24,14 +25,10 @@ public class WebTables : BaseOperations
         string xpath = $"//div//div[text()='{name}']//parent::div//span[@title='Delete']";
         ClickButton(By.XPath(xpath));
     }
-
-    //not WORKING, NEEN TO LOOK FOR SOLUTION: 
-    //element click intercepted: Element <span class="sr-only">...</span> is not clickable at point (1342, 44). 
-    //Other element would receive the click: <span aria-hidden="true">...</span>
+    
     public void ClickXButton()
     {
-        string xpath = $"//button//span[text()='Close']";
-        ClickButton(By.XPath(xpath));
+        ClickX();
     }
 
     public void ClickSubmitButton()
