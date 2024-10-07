@@ -36,7 +36,8 @@ public class FormsTests : TestBase
 
         string mobileNumber = "3334556667";
         practiceForms.InputMobile(mobileNumber);
-        practiceForms.SelectDateFromPicker("2004", "March", "13");
+        DateOnly birthDate = new DateOnly(2004, 03, 13);
+        practiceForms.SelectDateOfBirth(birthDate);
         practiceForms.SelectSubjects("Maths");
         practiceForms.SelectSubjects("Arts");
         practiceForms.SelectHobby("Sports");
@@ -50,13 +51,13 @@ public class FormsTests : TestBase
         practiceForms.ClickSubmit();
 
         Dictionary<string, string> setValues = practiceForms.GetSubmitValues();
-        practiceForms.ClickClose();
+        practiceForms.ClickClose();        	
 
         Assert.AreEqual($"{firstName} {lastName}", setValues["Student Name"], $"Expected Student Name value to be: {firstName} {lastName}");
         Assert.AreEqual(email, setValues["Student Email"], $"Expected Student Email value to be: {email}");
         Assert.AreEqual("Female", setValues["Gender"], $"Expected Gender value to be: 'Female'");
         Assert.AreEqual(mobileNumber, setValues["Mobile"], $"Expected Mobile value to be: {mobileNumber}");
-        Assert.AreEqual("13 March,2004", setValues["Date of Birth"], $"Expected Date of Birth value to be: '13 March,2004'");
+        Assert.AreEqual(birthDate.ToString("dd MMMM,yyyy"), setValues["Date of Birth"], $"Expected Date of Birth value to be: '13 March,2004'");
         Assert.AreEqual("Maths, Arts", setValues["Subjects"], $"Expected Subjects value to be: Maths, Arts");
         Assert.AreEqual("Sports, Reading", setValues["Hobbies"], $"Expected Hobbies value to be: Sports, Reading");
         Assert.AreEqual("TestUpload.txt", setValues["Picture"], $"Expected Picture value to be: TestUpload.txt");

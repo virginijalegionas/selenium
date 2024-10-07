@@ -47,19 +47,20 @@ public class BaseOperations
         act.MoveToElement(element).Click().Build().Perform();
     }
 
-    //Format 2004 September 3
-    public void SelectDateFromPicker(string year, string month, string day)
+    
+    public void SelectDateFromPicker(DateOnly date)//(string year, string month, string day)
     {
+
         GetElement(By.Id("dateOfBirthInput"), 5).Click();
         SelectElement yearDropDown = new SelectElement(driver.FindElement(By.ClassName("react-datepicker__year-select")));
-        yearDropDown.SelectByValue(year);
+        yearDropDown.SelectByValue(date.Year.ToString());
         SelectElement monthDropDown = new SelectElement(driver.FindElement(By.ClassName("react-datepicker__month-select")));
         //Month Value and text are different need to get Value from the Text
-        string monthXpath = $"//option[contains(text(),'{month}')]";
+        string monthXpath = $"//option[contains(text(),'{date.ToString("MMMM")}')]";
         string monthValue = GetElement(By.XPath(monthXpath), 5).GetAttribute("value");
         monthDropDown.SelectByValue(monthValue);
 
-        string dayXpath = $"//div[@class='react-datepicker__week']//div[text()='{day}' and contains(@aria-label,'{month}')]";
+        string dayXpath = $"//div[@class='react-datepicker__week']//div[text()='{date.Day}' and contains(@aria-label,'{date.ToString("MMMM")}')]";
         GetElement(By.XPath(dayXpath), 5).Click();
     }
 
@@ -68,7 +69,7 @@ public class BaseOperations
         string fullPath = System.Reflection.Assembly.GetAssembly(typeof(UploadDownload)).Location;
         string theDirectory = Path.GetDirectoryName(fullPath);
 
-        string uploadFile = Path.Combine(theDirectory, $"{fileName}");
+        string uploadFile = Path.Combine(theDirectory, fileName);
         IWebElement fileInput = driver.FindElement(by);
         fileInput.SendKeys(uploadFile);
     }

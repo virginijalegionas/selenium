@@ -66,10 +66,10 @@ public class PracticeForms : BaseOperations
         ClickOnCheckBox(By.XPath(xpath));
     }
 
-    public void SelectDateOfBirth(string year, string month, string day)
+    public void SelectDateOfBirth(DateOnly date)
     {
 
-        SelectDateFromPicker(year, month, day);
+        SelectDateFromPicker(date);
     }
 
 
