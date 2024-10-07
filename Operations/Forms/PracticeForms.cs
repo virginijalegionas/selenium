@@ -1,4 +1,5 @@
 using OpenQA.Selenium;
+using OpenQA.Selenium.Interactions;
 
 
 public class PracticeForms : BaseOperations
@@ -7,15 +8,6 @@ public class PracticeForms : BaseOperations
     {
     }
 
-
-    /* private static string MakeXpathForTextField(string fieldName, bool isTextArea){
-        if (!isTextArea){
-            return $"//div/label[contains(text(),'{fieldName}')]//parent::div//following-sibling::div/input";
-
-        }
-        else  return $"//div/label[contains(text(),'{fieldName}')]//parent::div//following-sibling::div/textarea";
-
-    } */
     public void InputFirstName(string firstNameValue)
     {
         InputTextField(By.Id("firstName"), firstNameValue);
@@ -34,12 +26,34 @@ public class PracticeForms : BaseOperations
         InputTextField(By.Id("userNumber"), mobileNumber);
     }
 
-    //ToDO later might overlap
     public void SelectGender(string gender)
     {
-
+        string xpath = $"//label[text()='{gender}']//preceding-sibling::input";
+        ClickOnRadio(By.XPath(xpath));
     }
 
+    public void SelectSubjects(string subjectValue)
+    {
+        string xpath = $"//div[@id='subjectsContainer']//input";
+        string searchString = subjectValue[..2];
+        InputTextField(By.XPath(xpath), searchString);
+        string dropDownXpath = $"//div[contains(text(),'{subjectValue}')]";
+        GetElement(By.XPath(dropDownXpath), 5).Click();
+    }
+
+    public void SelectState(string stateValue)
+    {
+        GetElement(By.Id("state"), 5).Click();
+        string dropDownXpath = $"//div[contains(text(),'{stateValue}')]";
+        GetElement(By.XPath(dropDownXpath), 5).Click();
+    }
+
+    public void SelectCity(string cityValue)
+    {
+        GetElement(By.Id("city"), 5).Click();
+        string dropDownXpath = $"//div[contains(text(),'{cityValue}')]";
+        GetElement(By.XPath(dropDownXpath), 5).Click();
+    }
 
     public void InputCurrentAddress(string currentAddressValue)
     {
@@ -49,31 +63,47 @@ public class PracticeForms : BaseOperations
     public void SelectHobby(string hobby)
     {
         string xpath = $"//label[text()='{hobby}']//preceding-sibling::input";
-        GetElement(By.XPath(xpath), 5).Click();
+        ClickOnCheckBox(By.XPath(xpath));
     }
 
-    /*    public void ClickSubmit()
+    public void SelectDateOfBirth(DateOnly date)
+    {
+
+        SelectDateFromPicker(date);
+    }
+
+
+    public void ClickSubmit()
+    {
+        string xpath = "//button[text()='Submit']";
+        ClickButton(By.XPath(xpath));
+    }
+    public void UploadFile(string fileName)
+    {
+
+        UploadTestFile(By.Id("uploadPicture"), fileName);
+    }
+
+    public void ClickClose()
+    {
+        ClickButton(By.Id("closeLargeModal"));
+    }
+
+    public Dictionary<string, string> GetSubmitValues()
+    {
+        Dictionary<string, string> submitValues = new Dictionary<string, string>();
+        string rowXpath = "//table//tbody/tr";
+        List<IWebElement> rows = GetElements(By.XPath(rowXpath), 5);
+        foreach (IWebElement row in rows)
         {
-            string xpath = "//button[text()='Submit']";
-            ClickButton(By.XPath(xpath));
+
+            List<IWebElement> columns = row.FindElements(By.TagName("td")).ToList();
+            submitValues.Add(columns[0].Text, columns[1].Text);
         }
 
+        return submitValues;
+    }
 
-            public Dictionary<string, string> GetOutputValues()
-            {
-                Dictionary<string, string> outputValues = new Dictionary<string, string>();
-                string xpath = "//div[@id='output']/div/p";
-                List<IWebElement> elements = GetElements(By.XPath(xpath), 5);
-                foreach (IWebElement element in elements)
-                {
-                    string elementText = element.Text;
-                    string[] results = elementText.Split(':');
-                    outputValues.Add(results[0].Trim(), results[1]);
-                }
-
-                return outputValues;
-            }
-     */
 
 
 }

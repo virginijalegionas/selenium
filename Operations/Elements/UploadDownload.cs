@@ -6,15 +6,9 @@ public class UploadDownload : BaseOperations
     {
     }
 
-    public void UploadTestFile()
+    public void UploadFile(string fileName)
     {
-        string fullPath = System.Reflection.Assembly.GetAssembly(typeof(UploadDownload)).Location;
-        string theDirectory = Path.GetDirectoryName(fullPath);
-
-        string uploadFile = Path.Combine(theDirectory, "TestUpload.txt");
-        IWebElement fileInput = driver.FindElement(By.Id("uploadFile"));
-        fileInput.SendKeys(uploadFile);
-        //driver.FindElement(By.Id("file-submit")).Click();
+        UploadTestFile(By.Id("uploadFile"), fileName);
     }
 
     public string GetUploadedFilePath()
