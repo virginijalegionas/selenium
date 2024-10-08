@@ -2,9 +2,6 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
 
-
-
-
 public class BaseOperations
 {
     protected readonly IWebDriver driver;
@@ -30,16 +27,19 @@ public class BaseOperations
         element.Clear();
         element.SendKeys(inputText);
     }
+
     public void ClickButton(By by)
     {
         GetElement(by, 5).Click();
     }
+
     public void ClickOnRadio(By by)
     {
         Actions act = new Actions(driver);
         IWebElement element = GetElement(by, 5);
         act.MoveToElement(element).Click().Build().Perform();
     }
+
     public void ClickOnCheckBox(By by)
     {
         Actions act = new Actions(driver);
@@ -47,13 +47,13 @@ public class BaseOperations
         act.MoveToElement(element).Click().Build().Perform();
     }
 
-    
-    public void SelectDateFromPicker(DateOnly date)//(string year, string month, string day)
+    public void SelectDateFromPicker(DateOnly date)
     {
 
         GetElement(By.Id("dateOfBirthInput"), 5).Click();
         SelectElement yearDropDown = new SelectElement(driver.FindElement(By.ClassName("react-datepicker__year-select")));
         yearDropDown.SelectByValue(date.Year.ToString());
+
         SelectElement monthDropDown = new SelectElement(driver.FindElement(By.ClassName("react-datepicker__month-select")));
         //Month Value and text are different need to get Value from the Text
         string monthXpath = $"//option[contains(text(),'{date.ToString("MMMM")}')]";
@@ -73,17 +73,27 @@ public class BaseOperations
         IWebElement fileInput = driver.FindElement(by);
         fileInput.SendKeys(uploadFile);
     }
+
     public void RightClickButton(By by)
     {
         Actions act = new Actions(driver);
         IWebElement element = GetElement(by, 5);
         act.ContextClick(element).Build().Perform();
     }
+
     public void DoubleClickButton(By by)
     {
         Actions act = new Actions(driver);
         IWebElement element = GetElement(by, 5);
         act.DoubleClick(element).Build().Perform();
+    }
+
+    public void ClickX()
+    {
+        string xpath = $"//button//span[text()='Close']";
+        Actions act = new Actions(driver);
+        IWebElement element = GetElement(By.XPath(xpath), 5);
+        act.MoveToElement(element).Click().Build().Perform();
     }
 
     public IWebElement GetElement(By by, int waitSeconds)
@@ -125,9 +135,9 @@ public class BaseOperations
             }
         }
 
-
         return false;
     }
+
     public bool IsElementDisabled(By by)
     {
         string attribute = GetElement(by, 5).GetAttribute("disabled");
