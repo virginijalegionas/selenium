@@ -17,7 +17,10 @@ namespace SeleniumTests
         public void StartDriver()
         {
             ChromeOptions options = new ChromeOptions();
-            options.AddArgument("--disable-search-engine-choice-screen");
+            options.PageLoadStrategy = PageLoadStrategy.None;
+            options.AddArguments(
+                "--disable-search-engine-choice-screen"
+                );
             driver = new ChromeDriver(options);
             driver.Manage().Window.Maximize();
         }

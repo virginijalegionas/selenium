@@ -130,8 +130,7 @@ public class AlertsFramesWindowsTests : TestBase
         Assert.AreEqual("Large Modal", modalTitle, $"Expected Modal title: Large Modal");
         Assert.IsTrue(modalBody.Contains("It has survived not only five centuries"), $"Expected that modal body contains text: 'It has survived not only five centuries'");
     }
-
-    //TODO TOMORROW
+    
     [TestMethod]
     public void BrowserWindows()
     {
@@ -139,26 +138,27 @@ public class AlertsFramesWindowsTests : TestBase
         browserWindows.MainPageMenu.ClickOnBlock("Alerts, Frame & Windows");
         browserWindows.LeftPanel.ClickOnSubMenu("Browser Windows");
 
-       /*  //STEP1: test New Tab Button
+        //STEP1: test New Tab Button
         browserWindows.ClickNewTabButton();
         browserWindows.SwitchToNewTab();
         string newPageText = browserWindows.GetNewPageText();
-        Assert.AreEqual("This is a sample page", newPageText, $"Expected New page text: 'This is a sample page'");
         browserWindows.ReturnToMainTab();
+        Assert.AreEqual("This is a sample page", newPageText, $"Expected New page text: 'This is a sample page'");        
 
         //STEP2: test New Window Button
         browserWindows.ClickNewWindowButton();
         browserWindows.SwitchToNewWindow();
         newPageText = browserWindows.GetNewPageText();
-        Assert.AreEqual("This is a sample page", newPageText, $"Expected New page text: 'This is a sample page'");
-        browserWindows.ReturnToMainPage(); */
+        browserWindows.ReturnToMainPage();
+        Assert.AreEqual("This is a sample page", newPageText, $"Expected New page text: 'This is a sample page'");        
 
         //STEP3: test New Winodow Message
         browserWindows.ClickNewWindowMessageButton();
         browserWindows.SwitchToNewWindow();
-        string newPageText = browserWindows.GetMessagePageText();
-        //Assert.IsTrue(newPageText.Contains("Please share this website with your friends"), $"Expected New page text contains: 'Please share this website with your friends'");
-        browserWindows.ReturnToMainPage();    
+        newPageText = browserWindows.GetMessagePageText();
+        browserWindows.ReturnToMainPage(); 
+        Assert.IsTrue(newPageText.Contains("Please share this website with your friends"), $"Expected New page text contains: 'Please share this website with your friends'");
+        
 
     }
 }
