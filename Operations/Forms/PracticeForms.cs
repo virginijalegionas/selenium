@@ -69,7 +69,7 @@ public class PracticeForms : BaseOperations
     public void SelectDateOfBirth(DateOnly date)
     {
 
-        SelectDateFromPicker(date);
+        SelectDateFromPicker(By.Id("dateOfBirthInput"), date);
     }
 
 

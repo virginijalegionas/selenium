@@ -47,10 +47,9 @@ public class BaseOperations
         act.MoveToElement(element).Click().Build().Perform();
     }
 
-    public void SelectDateFromPicker(DateOnly date)
+    public void SelectDateFromPicker(By by, DateOnly date)
     {
-
-        GetElement(By.Id("dateOfBirthInput"), 5).Click();
+        GetElement(by, 5).Click();
         SelectElement yearDropDown = new SelectElement(driver.FindElement(By.ClassName("react-datepicker__year-select")));
         yearDropDown.SelectByValue(date.Year.ToString());
 
