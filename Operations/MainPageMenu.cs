@@ -1,10 +1,7 @@
 using OpenQA.Selenium;
 
-
-
 public class MainPageMenu
 {
-
     private BaseOperations baseOperations;
 
     public MainPageMenu(BaseOperations baseOperations)
@@ -18,4 +15,9 @@ public class MainPageMenu
         baseOperations.GetElement(By.XPath(xpath), 5).Click();
     }
 
+    public void ClickHomePage()
+    {
+        string xpath = $"//header//a/img";
+        baseOperations.GetElement(By.XPath(xpath), 5).Click();
+    }
 }

@@ -34,7 +34,6 @@ public class DatePicker : BaseOperations
 
         string timeXpath = $"//li[text()='{dateTime:HH}:{dateTime:mm}']";
         GetElement(By.XPath(timeXpath), 5).Click();
-
     }
 
     public void SelectYear(int year)
@@ -63,7 +62,4 @@ public class DatePicker : BaseOperations
     {
         return GetElement(By.Id("dateAndTimePickerInput"), 5).GetAttribute("value");
     }
-
-
 }
-

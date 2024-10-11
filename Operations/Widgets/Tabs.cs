@@ -15,7 +15,6 @@ public class Tabs : BaseOperations
     public string GetTabText()
     {
         string xpath = "//div[@role='tabpanel' and @aria-hidden='false']";
-        return GetElement(By.XPath(xpath), 5).Text;        
+        return GetElement(By.XPath(xpath), 5).Text;
     }
-
 }

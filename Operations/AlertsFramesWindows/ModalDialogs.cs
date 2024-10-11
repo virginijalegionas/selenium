@@ -1,6 +1,5 @@
 using OpenQA.Selenium;
 
-
 public class ModalDialogs : BaseOperations
 {
     public ModalDialogs(IWebDriver driver) : base(driver)

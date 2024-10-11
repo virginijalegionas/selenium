@@ -1,6 +1,5 @@
 using OpenQA.Selenium;
 
-
 public class Frames : BaseOperations
 {
     public Frames(IWebDriver driver) : base(driver)
@@ -30,5 +29,4 @@ public class Frames : BaseOperations
         string xpath = $"//h1[@id = 'sampleHeading']";
         return GetElement(By.XPath(xpath), 5).Text;
     }
-
 }

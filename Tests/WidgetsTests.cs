@@ -3,7 +3,6 @@ namespace SeleniumTests;
 [TestClass]
 public class WidgetsTests : TestBase
 {
-
     [TestInitialize]
 
     public void AutoStartDriver()
@@ -37,18 +36,22 @@ public class WidgetsTests : TestBase
         selectMenu.MainPageMenu.ClickOnBlock("Widgets");
         selectMenu.LeftPanel.ClickOnSubMenu("Select Menu");
 
+        //STEP1: selecting value from first select menu
         string selectValue = "Group 2, option 1";
         selectMenu.SelectValue(selectValue);
         Assert.AreEqual(selectValue, selectMenu.GetSelectedValue(), $"Expected select value: {selectValue}");
 
+        //STEP2: selecting value from second select menu
         string selectOneValue = "Prof.";
         selectMenu.SelectOneValue(selectOneValue);
         Assert.AreEqual(selectOneValue, selectMenu.GetSelectedOneValue(), $"Expected select value: {selectOneValue}");
 
+        //STEP3: selecting value from old style select menu
         string selectOldStyleDropDownValue = "Magenta";
         selectMenu.SelectOldStyleDropDownValue(selectOldStyleDropDownValue);
         Assert.AreEqual(selectOldStyleDropDownValue, selectMenu.GetSelectedOldStyleDropDownValue(), $"Expected select value: {selectOldStyleDropDownValue}");
 
+        //STEP4: selecting value from multi value select menu
         IList<string> selectMultiValues = ["Green", "Red"];
         foreach (string value in selectMultiValues)
         {
@@ -57,6 +60,7 @@ public class WidgetsTests : TestBase
         IList<string> getMultiValues = selectMenu.GetSelectedMultiSelectDropDownValues();
         CollectionAssert.AreEquivalent(selectMultiValues.ToArray(), getMultiValues.ToArray());
 
+        //STEP5: selecting value from standard multi value select menu
         IList<string> selectStandardMultiValues = ["Saab", "Opel"];
         foreach (string value in selectStandardMultiValues)
         {
@@ -73,14 +77,19 @@ public class WidgetsTests : TestBase
         accordian.MainPageMenu.ClickOnBlock("Widgets");
         accordian.LeftPanel.ClickOnSubMenu("Accordian");
 
+        //by default first accordian is already expanded
         Assert.IsTrue(accordian.IsAccordianExpanded("What is Lorem Ipsum?"), $"Accordian - What is Lorem Ipsum? Expected to be Expanded");
-        Assert.IsFalse(accordian.IsAccordianExpanded("Where does it come from?"), $"Accordian - Where does it come from? Expected to be Expanded");
+        Assert.IsFalse(accordian.IsAccordianExpanded("Where does it come from?"), $"Accordian - Where does it come from? Expected to be not Expanded");
+        //expanding next accordian
         accordian.ExpandAccordian("Where does it come from?");
+        //prevously expanded Accordian is collapsed
+        Assert.IsFalse(accordian.IsAccordianExpanded("What is Lorem Ipsum?"), $"Accordian - What is Lorem Ipsum? Expected to not Expanded");
         string accordianText = accordian.GetExpandedAccordianText();
-        Assert.IsTrue(accordianText.Contains("Malorum\" by Cicero are also reproduced"), $"Expected Accordian contain text: Malorum\" by Cicero are also reproduced");
+        StringAssert.Contains(accordianText, "Malorum\" by Cicero are also reproduced");
+        //validating one more Accordian
         accordian.ExpandAccordian("Why do we use it?");
         accordianText = accordian.GetExpandedAccordianText();
-        Assert.IsTrue(accordianText.Contains("English. Many desktop publishing"), $"Expected Accordian contain text: English. Many desktop publishing");
+        StringAssert.Contains(accordianText, "English. Many desktop publishing");
     }
 
     [TestMethod]
@@ -90,10 +99,12 @@ public class WidgetsTests : TestBase
         datePicker.MainPageMenu.ClickOnBlock("Widgets");
         datePicker.LeftPanel.ClickOnSubMenu("Date Picker");
 
+        //Testing only date picker
         DateOnly dateValue = new DateOnly(2004, 06, 07);
         datePicker.SelectDateValue(dateValue);
         Assert.AreEqual(dateValue.ToString("MM/dd/yyyy"), datePicker.GetDateValue(), $"Expected Date of Date value to be: '06/07/2004'");
 
+        //Testing time and date picker
         DateTime dateTime = new DateTime(2011, 04, 27, 03, 15, 00);
         datePicker.SelectDateAndTime(dateTime);
         Assert.AreEqual(dateTime.ToString("MMMM d, yyyy H:mm tt"), datePicker.GetDateTimeValue(), $"Expected Date Time value to be: 'June 9, 2011 03:15'");
@@ -106,6 +117,7 @@ public class WidgetsTests : TestBase
         slider.MainPageMenu.ClickOnBlock("Widgets");
         slider.LeftPanel.ClickOnSubMenu("Slider");
 
+        //test few slides
         slider.SlideToPercentage(30);
         string sliderValue = slider.GetSliderValue();
         Assert.AreEqual(30, int.Parse(sliderValue), 2);
@@ -119,7 +131,6 @@ public class WidgetsTests : TestBase
         Assert.AreEqual(75, int.Parse(sliderValue), 2);
     }
 
-
     [TestMethod]
     public void ToolTips()
     {
@@ -127,9 +138,11 @@ public class WidgetsTests : TestBase
         toolTips.MainPageMenu.ClickOnBlock("Widgets");
         toolTips.LeftPanel.ClickOnSubMenu("Tool Tips");
 
+        //Validating Button Tooltip
         string buttonToolTip = toolTips.GetButtonToolTip();
         Assert.AreEqual("You hovered over the Button", buttonToolTip);
 
+        //Validating text field Tooltip
         string textFieldToolTip = toolTips.GetTextFieldToolTip();
         Assert.AreEqual("You hovered over the text field", textFieldToolTip);
     }
@@ -141,18 +154,18 @@ public class WidgetsTests : TestBase
         progressBar.MainPageMenu.ClickOnBlock("Widgets");
         progressBar.LeftPanel.ClickOnSubMenu("Progress Bar");
 
+        //Test progress bar one time
         progressBar.ClickStartStopButton();
         Common.Wait(3);
         progressBar.ClickStartStopButton();
         string progressValue = progressBar.GetProgressBarValue();
         Assert.AreEqual(30, int.Parse(progressValue), 4);
 
+        //Tests progress bar another time
         progressBar.ClickStartStopButton();
         Common.Wait(3);
         progressBar.ClickStartStopButton();
         progressValue = progressBar.GetProgressBarValue();
         Assert.AreEqual(60, int.Parse(progressValue), 4);
-
     }
-
 }

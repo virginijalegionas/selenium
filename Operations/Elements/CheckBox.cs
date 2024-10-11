@@ -9,14 +9,14 @@ public class CheckBox : BaseOperations
     public void CheckTreeNode(string treeNode)
     {
         string xpath = $"//span[text()='{treeNode}']//parent::label//span[@class='rct-checkbox']//*[local-name()='svg']";
-        if (!IsTreeNodeChecked(treeNode))
+        if (GetNodeCheckedStatus(treeNode) == "unchecked" || GetNodeCheckedStatus(treeNode) == "half checked")
             GetElement(By.XPath(xpath), 5).Click();
     }
 
     public void UnCheckTreeNode(string treeNode)
     {
         string xpath = $"//span[text()='{treeNode}']//parent::label//span[@class='rct-checkbox']//*[local-name()='svg']";
-        if (IsTreeNodeChecked(treeNode))
+        if (GetNodeCheckedStatus(treeNode) == "checked")
             GetElement(By.XPath(xpath), 5).Click();
     }
 
@@ -40,20 +40,15 @@ public class CheckBox : BaseOperations
         string className = GetElement(By.XPath(xpath), 5).GetAttribute("class");
         if (className == "rct-icon rct-icon-expand-open")
             return true;
-
         else return false;
-
     }
-    public bool IsTreeNodeChecked(string treeNode)
+
+    public string GetNodeCheckedStatus(string treeNode)
     {
         string xpath = $"//span[text()='{treeNode}']//parent::label//span[@class='rct-checkbox']//*[local-name()='svg']";
         string className = GetElement(By.XPath(xpath), 5).GetAttribute("class");
-        if (className == "rct-icon rct-icon-check")
-            return true;
-
-        else return false;
-
+        if (className.Contains("rct-icon rct-icon-check")) return "checked";
+        else if (className.Contains("rct-icon rct-icon-uncheck")) return "unchecked";
+        else return "half checked";
     }
-
-
 }

@@ -75,6 +75,4 @@ public class SelectMenu : BaseOperations
         IList<string> selectedValues = standardMultiSelect.AllSelectedOptions.Select(x => x.Text).ToList();
         return selectedValues;
     }
-
 }
-

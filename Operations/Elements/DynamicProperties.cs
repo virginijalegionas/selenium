@@ -1,4 +1,5 @@
 using OpenQA.Selenium;
+
 public class DynamicProperties : BaseOperations
 {
     public DynamicProperties(IWebDriver driver) : base(driver)
@@ -21,7 +22,4 @@ public class DynamicProperties : BaseOperations
     {
         return GetElement(By.Id("colorChange"), 5).GetAttribute("class");
     }
-
 }
-
-

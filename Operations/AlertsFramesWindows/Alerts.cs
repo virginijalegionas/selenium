@@ -1,6 +1,4 @@
 using OpenQA.Selenium;
-using OpenQA.Selenium.Interactions;
-
 
 public class Alerts : BaseOperations
 {
@@ -79,6 +77,4 @@ public class Alerts : BaseOperations
             return false;
         }
     }
-
-
 }

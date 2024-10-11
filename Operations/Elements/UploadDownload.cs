@@ -1,5 +1,5 @@
-using System.Net;
 using OpenQA.Selenium;
+
 public class UploadDownload : BaseOperations
 {
     public UploadDownload(IWebDriver driver) : base(driver)
@@ -20,7 +20,4 @@ public class UploadDownload : BaseOperations
     {
         ClickButton(By.Id("downloadButton"));
     }
-
 }
-
-

@@ -1,4 +1,5 @@
 using OpenQA.Selenium;
+
 public class RadioButton : BaseOperations
 {
     public RadioButton(IWebDriver driver) : base(driver)
@@ -10,11 +11,13 @@ public class RadioButton : BaseOperations
         ClickOnRadio(By.Id("yesRadio"));
 
     }
+
     public void ClickOnImpressiveRadio()
     {
         ClickOnRadio(By.Id("impressiveRadio"));
 
     }
+
     public string GetWhichRadioSelected()
     {
         string xpath = $"//p[@class='mt-3']/span";
@@ -26,7 +29,4 @@ public class RadioButton : BaseOperations
         string xpath = $"//label[text()='{radioName}']//parent::div/input"; ;
         return IsElementDisabled(By.XPath(xpath));
     }
-
 }
-
-
