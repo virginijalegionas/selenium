@@ -12,7 +12,7 @@ public class ToolTips : BaseOperations
         IWebElement hoverButton = GetElement(By.Id("toolTipButton"), 5);
         Actions toolTip = new Actions(driver);
         toolTip.MoveToElement(hoverButton);
-        toolTip.Click().Build().Perform();
+        toolTip.Build().Perform();
         Common.Wait(2);
         return GetElement(By.Id("buttonToolTip"), 5).Text;
     }
@@ -22,7 +22,7 @@ public class ToolTips : BaseOperations
         IWebElement hoverTextField = GetElement(By.Id("toolTipTextField"), 5);
         Actions toolTip = new Actions(driver);
         toolTip.MoveToElement(hoverTextField);
-        toolTip.Click().Build().Perform();
+        toolTip.Build().Perform();
         Common.Wait(2);
         return GetElement(By.Id("textFieldToolTip"), 5).Text;
     }

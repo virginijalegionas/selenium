@@ -18,9 +18,8 @@ public class Accordian : BaseOperations
     public bool IsAccordianExpanded(string accordianValue)
     {
         string xpath = $"//div[@class='card-header' and text()='{accordianValue}']//following-sibling::div";
-        string classValue = GetElement(By.XPath(xpath), 5).GetAttribute("class");
-        if (classValue == "collapse show") return true;
-        else return false;
+        string classValue = GetElement(By.XPath(xpath), 5).GetAttribute("class");        
+        return classValue == "collapse show";
     }
 
     public string GetExpandedAccordianText()

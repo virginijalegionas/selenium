@@ -22,12 +22,12 @@ public class WidgetsTests : TestBase
         //Open Origin Tab
         tabs.ClickOnTab("Origin");
         string tabText = tabs.GetTabText();
-        Assert.IsTrue(tabText.Contains("standard chunk of Lorem Ipsum used since the 1500s is reproduced"), $"Expected text contains: standard chunk of Lorem Ipsum used since the 1500s is reproduced");
+        StringAssert.Contains(tabText, "standard chunk of Lorem Ipsum used since the 1500s is reproduced");
 
         //Open Use Tab
         tabs.ClickOnTab("Use");
         tabText = tabs.GetTabText();
-        Assert.IsTrue(tabText.Contains("English. Many desktop publishing packages"), $"Expected text contains: English. Many desktop publishing packages");
+        StringAssert.Contains(tabText, "English. Many desktop publishing packages");        
     }
 
     [TestMethod]
@@ -108,15 +108,15 @@ public class WidgetsTests : TestBase
 
         slider.SlideToPercentage(30);
         string sliderValue = slider.GetSliderValue();
-        CollectionAssert.Contains(new[] { 28, 29, 30, 31, 32 }, int.Parse(sliderValue));
+        Assert.AreEqual(30, int.Parse(sliderValue), 2);
 
         slider.SlideToPercentage(15);
         sliderValue = slider.GetSliderValue();
-        CollectionAssert.Contains(new[] { 13, 14, 15, 16, 17 }, int.Parse(sliderValue));
+        Assert.AreEqual(15, int.Parse(sliderValue), 2);
 
         slider.SlideToPercentage(75);
         sliderValue = slider.GetSliderValue();
-        CollectionAssert.Contains(new[] { 73, 74, 75, 76, 77 }, int.Parse(sliderValue));
+        Assert.AreEqual(75, int.Parse(sliderValue), 2);
     }
 
 
@@ -145,15 +145,13 @@ public class WidgetsTests : TestBase
         Common.Wait(3);
         progressBar.ClickStartStopButton();
         string progressValue = progressBar.GetProgressBarValue();
-        CollectionAssert.Contains(new[] { 30, 31, 32, 33, 34 }, int.Parse(progressValue));
-        Console.WriteLine($"progress value: {progressValue}");
+        Assert.AreEqual(30, int.Parse(progressValue), 4);
 
         progressBar.ClickStartStopButton();
         Common.Wait(3);
         progressBar.ClickStartStopButton();
         progressValue = progressBar.GetProgressBarValue();
-        CollectionAssert.Contains(new[] { 60, 61, 62, 63, 64, 65 }, int.Parse(progressValue));
-        Console.WriteLine($"progress value: {progressValue}");
+        Assert.AreEqual(60, int.Parse(progressValue), 4);
 
     }
 

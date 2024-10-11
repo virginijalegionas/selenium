@@ -24,7 +24,7 @@ public class DatePicker : BaseOperations
         int thisYear = DateTime.Now.Year;
         if (thisYear != dateTime.Year)
         {
-            SelectYear(dateTime.Year.ToString());
+            SelectYear(dateTime.Year);
         }
         GetElement(By.ClassName("react-datepicker__month-read-view"), 5).Click();
         GetElement(By.XPath($"//div[text()='{dateTime.ToString("MMMM")}']"), 5).Click();
@@ -37,14 +37,14 @@ public class DatePicker : BaseOperations
 
     }
 
-    public void SelectYear(string year)
+    public void SelectYear(int year)
     {
         int thisYear = DateTime.Now.Year;
         GetElement(By.ClassName("react-datepicker__year-read-view"), 5).Click();
         IList<string> yearList = GetElements(By.ClassName("react-datepicker__year-option"), 5).Select(x => x.Text).ToList();
-        while (!yearList.Contains(year) && int.Parse(year) != thisYear)
+        while (!yearList.Contains(year.ToString()))
         {
-            if (thisYear > int.Parse(year))
+            if (thisYear > year)
             {
                 string previousYearXpath = $"//a[@class='react-datepicker__navigation react-datepicker__navigation--years react-datepicker__navigation--years-previous']//parent::div";
                 GetElement(By.XPath(previousYearXpath), 5).Click();
