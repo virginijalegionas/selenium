@@ -32,11 +32,7 @@ public class LeftPanel
     public bool IsLeftMenuExpanded(string menuName)
     {
         string xpath = $"//div[@class='header-text' and contains(text(),'{menuName}')]//ancestor::div[@class='element-group']/child::div";
-        string className = baseOperations.GetElement(By.XPath(xpath), 5).GetAttribute("class");
-        if (className == "element-list collapse show")
-        {
-            return true;
-        }
-        else return false;
+        string className = baseOperations.GetElement(By.XPath(xpath), 5).GetAttribute("class");       
+        return className == "element-list collapse show";
     }
 }
