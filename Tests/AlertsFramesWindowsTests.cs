@@ -3,7 +3,6 @@ namespace SeleniumTests;
 [TestClass]
 public class AlertsFramesWindowsTests : TestBase
 {
-
     [TestInitialize]
 
     public void AutoStartDriver()
@@ -46,14 +45,12 @@ public class AlertsFramesWindowsTests : TestBase
         alerts.ClickForConfirmBox();
         string confirmText = alerts.GetAlertText();
         Assert.AreEqual("Do you confirm action?", confirmText, $"Expected Confirm Box to have text: Do you confirm action?");
-
         //Select OK
         alerts.AcceptAlert();
         bool confirmBoxExists = alerts.IsAlertPresent();
         Assert.IsFalse(confirmBoxExists, $"Expected that Alert does not Exist");
         string selectedValue = alerts.GetValueSelectedInConfirmBox();
         Assert.AreEqual("You selected Ok", selectedValue, $"Expected that value should be: You selected Ok");
-
         //Call Confirm box to select Cancel
         alerts.ClickForConfirmBox();
         alerts.DismissAlert();
@@ -66,12 +63,10 @@ public class AlertsFramesWindowsTests : TestBase
         alerts.ClickForPromptBox();
         string promptText = alerts.GetAlertText();
         Assert.AreEqual("Please enter your name", promptText, $"Expected Confirm Box to have text: Please enter your name");
-
         string inputText = $"my name {Common.GenerateRandom()}";
         alerts.InputTextIntoAllert(inputText);
         alerts.AcceptAlert();
         Assert.AreEqual($"You entered {inputText}", alerts.GetValueEnteredInPromtBox(), $"Expected value to be: You entered {inputText}");
-
     }
 
     [TestMethod]
@@ -81,6 +76,7 @@ public class AlertsFramesWindowsTests : TestBase
         frames.MainPageMenu.ClickOnBlock("Alerts, Frame & Windows");
         frames.LeftPanel.ClickOnSubMenu("Frames");
 
+        //switching between frames, validating frame texts
         frames.SwitchToFrameOne();
         string frameOneText = frames.GetSampleHeadingInFrame();
         Assert.AreEqual("This is a sample page", frameOneText, $"Expected text in frame one: 'This is a sample page'");
@@ -98,10 +94,11 @@ public class AlertsFramesWindowsTests : TestBase
         nestedFrames.MainPageMenu.ClickOnBlock("Alerts, Frame & Windows");
         nestedFrames.LeftPanel.ClickOnSubMenu("Nested Frames");
 
+        //swithc to parent frame, validate text
         nestedFrames.SwitchToParentFrame();
         string parentFrameText = nestedFrames.GetParentFrameText();
         Assert.AreEqual("Parent frame", parentFrameText, $"Expected text in frame one: 'Parent frame'");
-
+        //switch to child frame, validate text
         nestedFrames.SwitchToChildFrame();
         string childFrameText = nestedFrames.GetChildFrameText();
         Assert.AreEqual("Child Iframe", childFrameText, $"Expected text in frame two: 'Child Iframe'");
@@ -130,7 +127,7 @@ public class AlertsFramesWindowsTests : TestBase
         Assert.AreEqual("Large Modal", modalTitle, $"Expected Modal title: Large Modal");
         Assert.IsTrue(modalBody.Contains("It has survived not only five centuries"), $"Expected that modal body contains text: 'It has survived not only five centuries'");
     }
-    
+
     [TestMethod]
     public void BrowserWindows()
     {
@@ -143,22 +140,20 @@ public class AlertsFramesWindowsTests : TestBase
         browserWindows.SwitchToNewTab();
         string newPageText = browserWindows.GetNewPageText();
         browserWindows.ReturnToMainTab();
-        Assert.AreEqual("This is a sample page", newPageText, $"Expected New page text: 'This is a sample page'");        
+        StringAssert.Contains(newPageText, "This is a sample page");
 
         //STEP2: test New Window Button
         browserWindows.ClickNewWindowButton();
         browserWindows.SwitchToNewWindow();
         newPageText = browserWindows.GetNewPageText();
         browserWindows.ReturnToMainPage();
-        Assert.AreEqual("This is a sample page", newPageText, $"Expected New page text: 'This is a sample page'");        
+        StringAssert.Contains(newPageText, "This is a sample page");
 
         //STEP3: test New Winodow Message
         browserWindows.ClickNewWindowMessageButton();
         browserWindows.SwitchToNewWindow();
         newPageText = browserWindows.GetMessagePageText();
-        browserWindows.ReturnToMainPage(); 
-        Assert.IsTrue(newPageText.Contains("Please share this website with your friends"), $"Expected New page text contains: 'Please share this website with your friends'");
-        
-
+        browserWindows.ReturnToMainPage();
+        StringAssert.Contains(newPageText, "Please share this website with your friends");        
     }
 }

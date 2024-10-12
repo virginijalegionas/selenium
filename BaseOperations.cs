@@ -133,7 +133,6 @@ public class BaseOperations
                 Common.Wait(1);
             }
         }
-
         return false;
     }
 
@@ -142,5 +141,4 @@ public class BaseOperations
         string attribute = GetElement(by, 5).GetAttribute("disabled");
         return attribute == "true";
     }
-
 }

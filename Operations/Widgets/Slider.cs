@@ -23,8 +23,4 @@ public class Slider : BaseOperations
     {
         return GetElement(By.Id("sliderValue"), 5).GetAttribute("value");
     }
-
 }
-
-
-

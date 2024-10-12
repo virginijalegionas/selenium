@@ -1,6 +1,4 @@
 using OpenQA.Selenium;
-using OpenQA.Selenium.Interactions;
-
 
 public class PracticeForms : BaseOperations
 {
@@ -12,6 +10,7 @@ public class PracticeForms : BaseOperations
     {
         InputTextField(By.Id("firstName"), firstNameValue);
     }
+
     public void InputLastName(string lastNameValue)
     {
         InputTextField(By.Id("lastName"), lastNameValue);
@@ -21,6 +20,7 @@ public class PracticeForms : BaseOperations
     {
         InputTextField(By.Id("userEmail"), emailValue);
     }
+
     public void InputMobile(string mobileNumber)
     {
         InputTextField(By.Id("userNumber"), mobileNumber);
@@ -72,12 +72,12 @@ public class PracticeForms : BaseOperations
         SelectDateFromPicker(By.Id("dateOfBirthInput"), date);
     }
 
-
     public void ClickSubmit()
     {
         string xpath = "//button[text()='Submit']";
         ClickButton(By.XPath(xpath));
     }
+
     public void UploadFile(string fileName)
     {
 
@@ -103,7 +103,4 @@ public class PracticeForms : BaseOperations
 
         return submitValues;
     }
-
-
-
 }

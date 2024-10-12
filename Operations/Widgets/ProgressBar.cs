@@ -1,5 +1,4 @@
 using OpenQA.Selenium;
-using OpenQA.Selenium.Interactions;
 
 public class ProgressBar : BaseOperations
 {
@@ -15,12 +14,4 @@ public class ProgressBar : BaseOperations
     {
         return GetElement(By.XPath("//div[@role='progressbar']"), 5).GetAttribute("aria-valuenow");
     }
-
 }
-
-
-
-
-
-
-

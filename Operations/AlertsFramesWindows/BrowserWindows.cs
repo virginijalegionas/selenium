@@ -55,5 +55,4 @@ public class BrowserWindows : BaseOperations
         driver.Close();
         driver.SwitchTo().Window(driver.WindowHandles[0]);
     }
-
 }

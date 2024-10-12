@@ -1,11 +1,8 @@
 namespace SeleniumTests;
 
-
-
 [TestClass]
 public class FormsTests : TestBase
 {
-
     [TestInitialize]
 
     public void AutoStartDriver()
@@ -14,8 +11,6 @@ public class FormsTests : TestBase
         OpenUrl();
     }
 
-
-
     [TestMethod]
     public void PracticeForms()
     {
@@ -23,17 +18,14 @@ public class FormsTests : TestBase
         practiceForms.MainPageMenu.ClickOnBlock("Forms");
         practiceForms.LeftPanel.ClickOnSubMenu("Practice Form");
 
-
+        //Input test values for the form
         string firstName = $"first {Common.GenerateRandom()}";
         practiceForms.InputFirstName(firstName);
-
         string lastName = $"last {Common.GenerateRandom()}";
         practiceForms.InputLastName(lastName);
-
         string email = $"mail{Common.GenerateRandom()}@email.com";
         practiceForms.InputEmail(email);
         practiceForms.SelectGender("Female");
-
         string mobileNumber = "3334556667";
         practiceForms.InputMobile(mobileNumber);
         DateOnly birthDate = new DateOnly(2004, 03, 13);
@@ -43,7 +35,6 @@ public class FormsTests : TestBase
         practiceForms.SelectHobby("Sports");
         practiceForms.SelectHobby("Reading");
         practiceForms.UploadFile("TestUpload.txt");
-
         string currentAddress = $"current address {Common.GenerateRandom()}";
         practiceForms.InputCurrentAddress(currentAddress);
         practiceForms.SelectState("NCR");
@@ -51,8 +42,8 @@ public class FormsTests : TestBase
         practiceForms.ClickSubmit();
 
         Dictionary<string, string> setValues = practiceForms.GetSubmitValues();
-        practiceForms.ClickClose();        	
-
+        practiceForms.ClickClose();
+        //Validating values
         Assert.AreEqual($"{firstName} {lastName}", setValues["Student Name"], $"Expected Student Name value to be: {firstName} {lastName}");
         Assert.AreEqual(email, setValues["Student Email"], $"Expected Student Email value to be: {email}");
         Assert.AreEqual("Female", setValues["Gender"], $"Expected Gender value to be: 'Female'");
@@ -63,6 +54,5 @@ public class FormsTests : TestBase
         Assert.AreEqual("TestUpload.txt", setValues["Picture"], $"Expected Picture value to be: TestUpload.txt");
         Assert.AreEqual(currentAddress, setValues["Address"], $"Expected Address value to be: {currentAddress}");
         Assert.AreEqual("NCR Noida", setValues["State and City"], $"Expected Permanant Address value to be: NCR Noida");
-
     }
 }

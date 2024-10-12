@@ -1,6 +1,3 @@
-
-using OpenQA.Selenium;
-
 public class Common
 {
     public static string GenerateRandom()
@@ -15,6 +12,7 @@ public class Common
     {
         Thread.Sleep(waitSeconds * 1000);
     }
+
     public static void DeleteFile(string path)
     {
         if (File.Exists(path))
@@ -22,41 +20,20 @@ public class Common
             File.Delete(path);
         }
     }
+
     public static bool IsFileInFolder(string path, int waitSeconds)
-    {        
-
-for (; waitSeconds > 0; waitSeconds--)
+    {
+        for (; waitSeconds > 0; waitSeconds--)
         {
-            
-               if (File.Exists(path))
-                {
-                    return true;
-                }
-
-                else {
-                    Wait(1);
-                }
-            
+            if (File.Exists(path))
+            {
+                return true;
+            }
+            else
+            {
+                Wait(1);
+            }
         }
-
-                
         return false;
     }
-
-
-
-
-
-
-
-
-
-
 }
-
-
-
-
-
-
-

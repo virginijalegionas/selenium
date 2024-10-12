@@ -26,5 +26,4 @@ public class ToolTips : BaseOperations
         Common.Wait(2);
         return GetElement(By.Id("textFieldToolTip"), 5).Text;
     }
-
 }

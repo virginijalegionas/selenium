@@ -1,6 +1,5 @@
 using OpenQA.Selenium;
 
-
 public class NestedFrames : BaseOperations
 {
     public NestedFrames(IWebDriver driver) : base(driver)
@@ -31,5 +30,4 @@ public class NestedFrames : BaseOperations
         string xpath = $"//body/p";
         return GetElement(By.XPath(xpath), 5).Text;
     }
-
 }

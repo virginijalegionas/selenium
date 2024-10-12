@@ -1,5 +1,4 @@
 using OpenQA.Selenium;
-using OpenQA.Selenium.Interactions;
 
 public class WebTables : BaseOperations
 {
@@ -19,13 +18,12 @@ public class WebTables : BaseOperations
         ClickButton(By.XPath(xpath));
     }
 
-
     public void ClickDeleteByNameButton(string name)
     {
         string xpath = $"//div//div[text()='{name}']//parent::div//span[@title='Delete']";
         ClickButton(By.XPath(xpath));
     }
-    
+
     public void ClickXButton()
     {
         ClickX();
@@ -36,6 +34,7 @@ public class WebTables : BaseOperations
         string xpath = "//button[text()='Submit']";
         ClickButton(By.XPath(xpath));
     }
+
     private static string MakeXpathForTextField(string fieldName)
     {
         return $"//div/label[contains(text(),'{fieldName}')]//parent::div//following-sibling::div/input";
@@ -46,27 +45,32 @@ public class WebTables : BaseOperations
         string xpath = MakeXpathForTextField("Email");
         InputTextField(By.XPath(xpath), emailValue);
     }
+
     public void InputFirstName(string firstNameValue)
     {
         string xpath = MakeXpathForTextField("First Name");
         InputTextField(By.XPath(xpath), firstNameValue);
 
     }
+
     public void InputLastName(string lastNameValue)
     {
         string xpath = MakeXpathForTextField("Last Name");
         InputTextField(By.XPath(xpath), lastNameValue);
     }
+
     public void InputAge(string ageValue)
     {
         string xpath = MakeXpathForTextField("Age");
         InputTextField(By.XPath(xpath), ageValue);
     }
+
     public void InputSalary(string salaryValue)
     {
         string xpath = MakeXpathForTextField("Salary");
         InputTextField(By.XPath(xpath), salaryValue);
     }
+
     public void InputDepartment(string departmentValue)
     {
         string xpath = MakeXpathForTextField("Department");
@@ -100,10 +104,5 @@ public class WebTables : BaseOperations
         }
         return tableValues;
     }
-
-
-
 }
-
-
 
