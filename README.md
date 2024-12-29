@@ -9,6 +9,7 @@ The aim of this project: keep up with the selenium web automation skills and imp
 - no .runSettings required for this project
 
 **Automated tests validate these situations:**
+
 *Elements*
 - Text Box
 - Check Box
@@ -18,8 +19,10 @@ The aim of this project: keep up with the selenium web automation skills and imp
 - Dynamic Properties: visible, color changed, etc.
 - Upload, Download
 - Navigation Menu
+
 *Forms*
 - Fill the form, submit it, validate results
+
 *Widgets*
 - Tabs
 - Select Menu
@@ -28,6 +31,7 @@ The aim of this project: keep up with the selenium web automation skills and imp
 - Slider
 - Tool Tips
 - Progress Bar
+
 *Other Elements*
 - Alerts
 - Frames
